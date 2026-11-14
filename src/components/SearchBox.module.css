@@ -6,7 +6,12 @@
 }
 
 .compact {
-  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.compact .row {
+  flex-wrap: nowrap;
 }
 
 .label {

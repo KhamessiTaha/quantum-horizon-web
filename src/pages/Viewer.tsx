@@ -25,7 +25,7 @@ import { parseViewState, queryKey, targetQuery, toSearchParams, type Panel, type
 import styles from "./Viewer.module.css";
 
 const PANELS: { id: Panel; label: string }[] = [
-  { id: "findings", label: "Image only" },
+  { id: "findings", label: "Motion" },
   { id: "spectrum", label: "Spectrum" },
   { id: "brightness", label: "Brightness" },
   { id: "movers", label: "What moved" },
@@ -155,74 +155,78 @@ export default function Viewer() {
       ) : null}
 
       <div className={styles.layout}>
-        <Player
-          view={view}
-          onChange={update}
-          frames={frames.data}
-          loading={frames.loading}
-          error={frames.error}
-          status={frames.status}
-          elapsedMs={frames.elapsedMs}
-          differenceImage={difference.data?.image ?? frames.data?.difference_image ?? null}
-          catalog={gaia.data}
-          catalogError={gaia.error}
-          movers={view.panel === "movers" ? (movers.data?.candidates ?? []) : []}
-          selectedMover={selectedMover}
-        />
+        <div className={styles.main}>
+          <Player
+            view={view}
+            onChange={update}
+            frames={frames.data}
+            loading={frames.loading}
+            error={frames.error}
+            status={frames.status}
+            elapsedMs={frames.elapsedMs}
+            differenceImage={difference.data?.image ?? frames.data?.difference_image ?? null}
+            catalog={gaia.data}
+            catalogError={gaia.error}
+            movers={view.panel === "movers" ? (movers.data?.candidates ?? []) : []}
+            selectedMover={selectedMover}
+          />
+
+          <section className={styles.analysis}>
+            <div className={styles.panelTabs} role="tablist" aria-label="Analysis">
+              {PANELS.map((panel) => (
+                <button
+                  key={panel.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={view.panel === panel.id}
+                  className="btn toggle"
+                  onClick={() => update({ panel: panel.id })}
+                >
+                  {panel.label}
+                </button>
+              ))}
+            </div>
+            {view.panel === "spectrum" ? (
+              <Spectrum
+                data={spectrum.data}
+                loading={spectrum.loading}
+                error={spectrum.error}
+                picked={Boolean(view.pick)}
+                onClear={() => update({ pick: null })}
+              />
+            ) : null}
+            {view.panel === "brightness" ? (
+              <LightCurve data={brightness.data} loading={brightness.loading} error={brightness.error} />
+            ) : null}
+            {view.panel === "movers" ? (
+              <Movers
+                data={movers.data}
+                loading={movers.loading}
+                error={movers.error}
+                selected={selectedMover}
+                onSelect={setSelectedMover}
+              />
+            ) : null}
+            {view.panel === "findings" ? (
+              <p className={styles.analysisHint}>
+                The motion measurement is beside the image. Open <strong>Spectrum</strong> to measure flux against
+                wavelength in each pass, <strong>Brightness</strong> to follow one band over time, or{" "}
+                <strong>What moved</strong> to search the whole field for anything else that changed position.
+              </p>
+            ) : null}
+          </section>
+        </div>
         <FindingsPanel frames={frames.data} />
       </div>
 
-      <section className={styles.analysis}>
-        <div className={styles.panelTabs} role="tablist" aria-label="Analysis">
-          {PANELS.map((panel) => (
-            <button
-              key={panel.id}
-              type="button"
-              role="tab"
-              aria-selected={view.panel === panel.id}
-              className="btn toggle"
-              onClick={() => update({ panel: panel.id })}
-            >
-              {panel.label}
-            </button>
-          ))}
-        </div>
-        {view.panel === "spectrum" ? (
-          <Spectrum
-            data={spectrum.data}
-            loading={spectrum.loading}
-            error={spectrum.error}
-            picked={Boolean(view.pick)}
-            onClear={() => update({ pick: null })}
-          />
-        ) : null}
-        {view.panel === "brightness" ? (
-          <LightCurve data={brightness.data} loading={brightness.loading} error={brightness.error} />
-        ) : null}
-        {frames.data ? (
-          <SkyContext
-            ra={frames.data.grid.ra}
-            dec={frames.data.grid.dec}
-            fovDeg={frames.data.grid.fov_deg}
-            name={frames.data.target.name}
-          />
-        ) : null}
-        {view.panel === "movers" ? (
-          <Movers
-            data={movers.data}
-            loading={movers.loading}
-            error={movers.error}
-            selected={selectedMover}
-            onSelect={setSelectedMover}
-          />
-        ) : null}
-        {view.panel === "findings" ? (
-          <p className={styles.analysisHint}>
-            The findings panel is beside the image. Open <strong>Spectrum</strong> to measure flux against wavelength in
-            each pass, or <strong>Brightness</strong> to follow one wavelength band over time.
-          </p>
-        ) : null}
-      </section>
+      {frames.data ? (
+        <SkyContext
+          ra={frames.data.grid.ra}
+          dec={frames.data.grid.dec}
+          fovDeg={frames.data.grid.fov_deg}
+          name={frames.data.target.name}
+        />
+      ) : null}
 
       <footer className={styles.footer}>
         <a href="/methods">How these numbers are measured, and where they stop</a>

@@ -334,8 +334,8 @@ export default function Player({
               <button
                 type="button"
                 className={styles.epochToggle}
-                aria-label={hidden ? `Add pass ${p.index}` : `Subtract pass ${p.index}`}
-                title={hidden ? "Add this epoch back" : "Subtract this epoch"}
+                aria-label={hidden ? `Put pass ${p.index} back in the blink` : `Leave pass ${p.index} out of the blink`}
+                title={hidden ? "Put this pass back in the blink" : "Leave this pass out of the blink"}
                 onClick={() => togglePass(p.index)}
               >
                 {hidden ? "+" : "−"}
@@ -354,6 +354,12 @@ export default function Player({
           </label>
         </div>
       </div>
+
+      {passes.length > 1 ? (
+        <p className={styles.passHint}>
+          Click a pass to hold it, or <span className="mono">−</span> to leave it out of the blink.
+        </p>
+      ) : null}
 
       <Timeline passes={passes} hidden={view.hidden} current={blink ? (shown?.index ?? null) : null} />
     </section>

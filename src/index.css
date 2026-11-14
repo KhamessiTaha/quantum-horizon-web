@@ -100,7 +100,8 @@ button {
   color: var(--accent-ink);
 }
 
-.toggle[aria-pressed="true"] {
+.toggle[aria-pressed="true"],
+.toggle[aria-selected="true"] {
   background: var(--accent-tint);
   border-color: var(--accent);
   color: var(--text);

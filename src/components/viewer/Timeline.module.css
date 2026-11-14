@@ -39,6 +39,11 @@
   color: var(--text-muted);
 }
 
+.pass[data-end="true"] .passLabel {
+  left: auto;
+  right: 0;
+}
+
 .pass[data-active="true"] .passLabel {
   color: var(--text);
 }

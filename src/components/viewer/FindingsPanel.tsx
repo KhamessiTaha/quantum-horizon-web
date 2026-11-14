@@ -128,7 +128,12 @@ export default function FindingsPanel({ frames }: { frames: FramesResponse | nul
       <section className={`panel ${styles.card}`}>
         <div className={styles.cardHead}>
           <h2>Data quality</h2>
-          {measurement ? <Badge confidence={measurement.photometry_confidence as Confidence} /> : null}
+          {measurement ? (
+            <span className={styles.badgeGroup}>
+              brightness
+              <Badge confidence={measurement.photometry_confidence as Confidence} />
+            </span>
+          ) : null}
         </div>
         <dl className={styles.quality}>
           <div className={styles.qualityRow}>
@@ -159,8 +164,10 @@ export default function FindingsPanel({ frames }: { frames: FramesResponse | nul
           </div>
         </dl>
         {flags.length ? (
-          <div className={styles.flags}>
-            <span className={styles.term}>Flags on the source</span>
+          <details className={styles.flags}>
+            <summary className={styles.summary}>
+              {flags.length} quality flag{flags.length === 1 ? "" : "s"} on the source
+            </summary>
             <ul>
               {flags.map((flag) => (
                 <li key={flag}>
@@ -169,7 +176,7 @@ export default function FindingsPanel({ frames }: { frames: FramesResponse | nul
                 </li>
               ))}
             </ul>
-          </div>
+          </details>
         ) : null}
         {frames?.notes.length ? (
           <ul className={styles.notes}>

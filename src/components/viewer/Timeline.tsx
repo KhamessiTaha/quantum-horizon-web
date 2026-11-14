@@ -53,6 +53,7 @@ export default function Timeline({ passes, hidden, current }: TimelineProps) {
               className={styles.pass}
               data-active={p.index === current}
               data-off={off}
+              data-end={left > 70}
               style={{ left: `${Math.min(left, 98)}%`, width: `${Math.max(width, 1.5)}%` }}
               title={`Pass ${p.index}: ${p.start} to ${p.end}, ${p.frames_used} of ${p.frames_total} frames${
                 p.wavelength_min_um ? `, ${p.wavelength_min_um}–${p.wavelength_max_um} µm` : ""
