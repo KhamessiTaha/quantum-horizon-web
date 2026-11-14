@@ -74,7 +74,7 @@ export default function Landing() {
               {motion?.measured_arcsec
                 ? `measured ${motion.measured_arcsec.toFixed(2)} ± ${(motion.sigma_arcsec ?? 0).toFixed(2)}″ · catalog ${motion.predicted_arcsec?.toFixed(2)}″`
                 : hero.error
-                  ? "start the backend to load live frames"
+                  ? "frames could not be loaded"
                   : "loading frames from the archive"}
             </span>
           </figcaption>

@@ -226,7 +226,47 @@ export class ApiError extends Error {
 }
 
 export function imageUrl(path: string): string {
-  return path.startsWith("http") ? path : `${API_BASE}${path}`;
+  if (path.startsWith("http") || path.startsWith("/snapshot/")) return path;
+  return `${API_BASE}${path}`;
+}
+
+let snapshotIndex: Promise<Set<string>> | null = null;
+
+function loadSnapshotIndex(): Promise<Set<string>> {
+  snapshotIndex ??= fetch("/snapshot/index.json")
+    .then((response) => (response.ok ? (response.json() as Promise<string[]>) : []))
+    .then((keys) => new Set(keys))
+    .catch(() => new Set<string>());
+  return snapshotIndex;
+}
+
+function snapshotSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function snapshotKey(path: string, search: URLSearchParams): string | null {
+  const endpoint = path.replace(/^\/api\//, "");
+  if (endpoint === "flags") return "flags";
+  const target = search.get("target");
+  if (!target || search.has("ra") || search.has("x")) return null;
+  const parts = [endpoint, snapshotSlug(target), (search.get("det") ?? "D2").toLowerCase(), (search.get("fov") ?? "0.06").replace(".", "p")];
+  if (search.has("a") && search.has("b")) parts.push(`${search.get("a")}-${search.get("b")}`);
+  return parts.join("__");
+}
+
+async function fromSnapshot<T>(path: string, search: URLSearchParams, signal?: AbortSignal): Promise<T | null> {
+  const key = snapshotKey(path, search);
+  if (!key || !(await loadSnapshotIndex()).has(key)) return null;
+  try {
+    const response = await fetch(`/snapshot/${key}.json`, { signal });
+    return response.ok ? ((await response.json()) as T) : null;
+  } catch (error) {
+    if (signal?.aborted) throw error;
+    return null;
+  }
 }
 
 export interface TargetQuery {
@@ -251,6 +291,8 @@ function params(query: TargetQuery, extra: Record<string, string | number> = {})
 }
 
 async function get<T>(path: string, search: URLSearchParams, signal?: AbortSignal): Promise<T> {
+  const frozen = await fromSnapshot<T>(path, search, signal);
+  if (frozen !== null) return frozen;
   const response = await fetch(`${API_BASE}${path}?${search.toString()}`, { signal });
   if (!response.ok) {
     let detail = `Request failed with status ${response.status}`;
