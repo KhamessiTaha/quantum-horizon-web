@@ -1,6 +1,8 @@
 const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
 
-export const API_BASE = (env?.VITE_API_BASE ?? "http://localhost:8000").replace(/\/$/, "");
+const DEFAULT_API = env?.PROD ? "https://quantum-horizon-api.vercel.app" : "http://localhost:8000";
+
+export const API_BASE = (env?.VITE_API_BASE || DEFAULT_API).replace(/\/$/, "");
 
 export type Confidence = "measured" | "marginal" | "not-measurable" | "below-noise" | "indicative";
 
