@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Chart.module.css";
 
-const ALADIN_SCRIPT = "https://aladin.cds.unistra.fr/AladinLite/api/v3/latest/aladin.js";
+const ALADIN_MODULE = "https://cdn.jsdelivr.net/npm/aladin-lite@3.8.2/dist/aladin.js";
+
+const IRSA_HIPS = "https://irsa.ipac.caltech.edu/data/hips/CDS";
+
+const SURVEYS = {
+  wise: `${IRSA_HIPS}/AllWISE/RGB-W4-W2-W1`,
+  twomass: `${IRSA_HIPS}/2MASS/Color`,
+  dss: `${IRSA_HIPS}/DSS2/color`,
+};
 
 interface AladinApi {
   init: Promise<void>;
@@ -14,32 +22,23 @@ interface AladinInstance {
   catalogFromSimbad?: (target: string, radius: number, options: Record<string, unknown>) => unknown;
 }
 
-declare global {
-  interface Window {
-    A?: AladinApi;
-  }
-}
+let loading: Promise<AladinApi> | null = null;
 
 function load(): Promise<AladinApi> {
-  if (window.A) return Promise.resolve(window.A);
-  return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(`script[src="${ALADIN_SCRIPT}"]`);
-    const script = existing ?? document.createElement("script");
-    script.addEventListener("load", () => (window.A ? resolve(window.A) : reject(new Error("Aladin did not load"))));
-    script.addEventListener("error", () => reject(new Error("the CDS server could not be reached")));
-    if (!existing) {
-      script.src = ALADIN_SCRIPT;
-      script.async = true;
-      document.head.append(script);
-    }
-  });
+  loading ??= import(/* @vite-ignore */ ALADIN_MODULE)
+    .then((module: { default: AladinApi }) => module.default)
+    .catch(() => {
+      loading = null;
+      throw new Error("the sky-map library could not be reached");
+    });
+  return loading;
 }
 
 /** Where this field sits in the wider sky, on survey imagery served by CDS. */
 export default function SkyContext({ ra, dec, fovDeg, name }: { ra: number; dec: number; fovDeg: number; name: string }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [survey, setSurvey] = useState("CDS/P/allWISE/color");
+  const [survey, setSurvey] = useState(SURVEYS.wise);
   const holder = useRef<HTMLDivElement>(null);
   const instance = useRef<AladinInstance | null>(null);
 
@@ -61,6 +60,7 @@ export default function SkyContext({ ra, dec, fovDeg, name }: { ra: number; dec:
           showLayersControl: false,
           showGotoControl: false,
         });
+        instance.current.setImageSurvey(survey);
       })
       .catch((reason: unknown) => {
         if (!cancelled) setError(reason instanceof Error ? reason.message : "could not load the sky map");
@@ -91,9 +91,9 @@ export default function SkyContext({ ra, dec, fovDeg, name }: { ra: number; dec:
         <>
           <div className={styles.legend}>
             {[
-              ["CDS/P/allWISE/color", "WISE (3.4–22 µm)"],
-              ["CDS/P/2MASS/color", "2MASS (1.2–2.2 µm)"],
-              ["CDS/P/DSS2/color", "DSS2 (visible)"],
+              [SURVEYS.wise, "WISE (3.4–22 µm)"],
+              [SURVEYS.twomass, "2MASS (1.2–2.2 µm)"],
+              [SURVEYS.dss, "DSS2 (visible)"],
             ].map(([id, label]) => (
               <button
                 key={id}
@@ -108,13 +108,12 @@ export default function SkyContext({ ra, dec, fovDeg, name }: { ra: number; dec:
           </div>
           {error ? (
             <p className={styles.note}>
-              The sky map could not load: {error}. Everything else on this page works without it, because it comes from
-              IRSA and the AWS mirror rather than from CDS.
+              The sky map could not load: {error}. Everything else on this page works without it.
             </p>
           ) : (
             <div ref={holder} className={styles.sky} />
           )}
-          <p className={styles.sub}>Imagery: CDS/Strasbourg (Aladin Lite), WISE, 2MASS and DSS2 hierarchical surveys.</p>
+          <p className={styles.sub}>Imagery: WISE, 2MASS and DSS2 hierarchical surveys served by NASA/IPAC IRSA. Viewer: Aladin Lite, CDS/Strasbourg.</p>
         </>
       ) : null}
     </section>
