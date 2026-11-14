@@ -116,12 +116,31 @@ export function targetQuery(state: ViewState) {
   };
 }
 
-export function parseQuery(query: string): { target: string | null; ra: number | null; dec: number | null } {
-  const parts = query.trim().split(/[\s,]+/);
+const SEXAGESIMAL_MARKS = /[hmsd°'′"″:]/gi;
+
+/** Coordinates in degrees ("269.4463 4.7682") or sexagesimal ("17 57 47.09 +04 46 07.7", "17h57m47s +04°46′07″"). */
+export function parseCoordinates(text: string): { ra: number; dec: number } | null {
+  const trimmed = text.trim();
+  if (!/^[\d\s.,:+\-hmsd°'′"″]+$/i.test(trimmed)) return null;
+  const parts = trimmed.replace(SEXAGESIMAL_MARKS, " ").split(/[\s,]+/).filter(Boolean);
   if (parts.length === 2) {
     const ra = parseNumber(parts[0], 0, 360);
     const dec = parseNumber(parts[1], -90, 90);
-    if (ra !== null && dec !== null) return { target: null, ra, dec };
+    return ra !== null && dec !== null ? { ra, dec } : null;
   }
+  if (parts.length !== 6) return null;
+  const [h, m, s, d, dm, ds] = parts.map(Number);
+  if ([h, m, s, d, dm, ds].some((n) => !Number.isFinite(n))) return null;
+  if (h < 0 || h >= 24 || m < 0 || m >= 60 || s < 0 || s >= 60 || dm < 0 || dm >= 60 || ds < 0 || ds >= 60) return null;
+  const sign = parts[3].startsWith("-") ? -1 : 1;
+  const ra = (h + m / 60 + s / 3600) * 15;
+  const dec = sign * (Math.abs(d) + dm / 60 + ds / 3600);
+  if (dec < -90 || dec > 90) return null;
+  return { ra: Number(ra.toFixed(6)), dec: Number(dec.toFixed(6)) };
+}
+
+export function parseQuery(query: string): { target: string | null; ra: number | null; dec: number | null } {
+  const coordinates = parseCoordinates(query);
+  if (coordinates) return { target: null, ...coordinates };
   return { target: query.trim() || null, ra: null, dec: null };
 }

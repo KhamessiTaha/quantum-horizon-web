@@ -304,3 +304,25 @@ export function fetchMovers(query: TargetQuery, signal?: AbortSignal): Promise<M
 export function fetchFlagReference(signal?: AbortSignal): Promise<FlagReference> {
   return get<FlagReference>("/api/flags", new URLSearchParams(), signal);
 }
+
+export interface NamedObject {
+  name: string;
+  display: string;
+  ra: number;
+  dec: number;
+  kind: string;
+  refs: number;
+}
+
+export interface NearbyResponse {
+  ra: number;
+  dec: number;
+  radius: number;
+  objects: NamedObject[];
+  source: string;
+}
+
+export function fetchNearby(ra: number, dec: number, radius: number, signal?: AbortSignal): Promise<NearbyResponse> {
+  const search = new URLSearchParams({ ra: ra.toFixed(3), dec: dec.toFixed(3), radius: radius.toFixed(3) });
+  return get<NearbyResponse>("/api/nearby", search, signal);
+}

@@ -228,3 +228,20 @@
   font-size: 11px;
   color: var(--text-quiet);
 }
+
+.explore {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 0 56px;
+}
+
+.skyLink {
+  align-self: flex-start;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.skyLink:hover {
+  text-decoration: underline;
+}

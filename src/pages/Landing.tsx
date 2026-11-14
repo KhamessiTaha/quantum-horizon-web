@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import SearchBox from "../components/SearchBox.tsx";
+import SkyMap from "../components/SkyMap.tsx";
 import { FEATURED_TARGETS, viewLink } from "../data/featuredTargets.ts";
 import { fetchFrames, imageUrl, type FramesResponse } from "../lib/api.ts";
 import { useAsync } from "../lib/useAsync.ts";
@@ -49,6 +50,9 @@ export default function Landing() {
             changed, and how sure that measurement is.
           </p>
           <SearchBox />
+          <a href="#sky" className={styles.skyLink}>
+            Don't know a name? Explore the sky map ↓
+          </a>
         </div>
         <figure className={styles.heroFigure}>
           <div className={styles.strip}>
@@ -99,6 +103,21 @@ export default function Landing() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section id="sky" className={`container ${styles.explore}`}>
+        <div className={styles.sectionHead}>
+          <h2>Or pick any spot on the sky</h2>
+          <p>Pan and zoom the infrared sky, click a named object or any position, and blink it.</p>
+        </div>
+        <SkyMap
+          ra={83.8221}
+          dec={-5.3911}
+          viewDeg={1.2}
+          initialSurvey={1}
+          title="Explore the sky"
+          subtitle="Starting on the Orion Nebula. Amber names come from SIMBAD; drag to move, scroll to zoom."
+        />
       </section>
 
       <section id="how" className={styles.band}>

@@ -46,3 +46,75 @@
   font-size: 13px;
   color: var(--text-quiet);
 }
+
+.field {
+  position: relative;
+  flex: 1 1 240px;
+  min-width: 0;
+  display: flex;
+}
+
+.field .input {
+  flex: 1 1 auto;
+}
+
+.list {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: min(420px, 60vh);
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.groupLabel {
+  display: block;
+  padding: 8px 10px 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-quiet);
+}
+
+.option,
+.coords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.coords {
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.option[aria-selected="true"],
+.coords:hover {
+  background: var(--accent-tint);
+}
+
+.optionName {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.optionNote {
+  font-size: 12px;
+  color: var(--text-muted);
+}

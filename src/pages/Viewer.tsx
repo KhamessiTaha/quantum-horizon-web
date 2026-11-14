@@ -5,7 +5,7 @@ import LightCurve from "../components/viewer/LightCurve.tsx";
 import Movers from "../components/viewer/Movers.tsx";
 import Player from "../components/viewer/Player.tsx";
 import ShareButtons from "../components/viewer/ShareButtons.tsx";
-import SkyContext from "../components/viewer/SkyContext.tsx";
+import SkyMap from "../components/SkyMap.tsx";
 import Spectrum from "../components/viewer/Spectrum.tsx";
 import {
   fetchCatalog,
@@ -87,6 +87,12 @@ export default function Viewer() {
     : view.ra !== null && view.dec !== null
       ? `RA ${view.ra.toFixed(4)}° · Dec ${view.dec >= 0 ? "+" : ""}${view.dec.toFixed(4)}°`
       : "Search for a name, or paste coordinates";
+
+  const mapField = frames.data
+    ? { ra: frames.data.grid.ra, dec: frames.data.grid.dec, sizeDeg: frames.data.grid.fov_deg }
+    : view.ra !== null && view.dec !== null
+      ? { ra: view.ra, dec: view.dec, sizeDeg: view.fovDeg }
+      : null;
 
   if (view.embed) {
     return (
@@ -219,12 +225,17 @@ export default function Viewer() {
         <FindingsPanel frames={frames.data} />
       </div>
 
-      {frames.data ? (
-        <SkyContext
-          ra={frames.data.grid.ra}
-          dec={frames.data.grid.dec}
-          fovDeg={frames.data.grid.fov_deg}
-          name={frames.data.target.name}
+      {mapField ? (
+        <SkyMap
+          key={key}
+          ra={mapField.ra}
+          dec={mapField.dec}
+          viewDeg={Math.max(mapField.sizeDeg * 8, 0.4)}
+          title="Where this is in the sky"
+          subtitle={`${heading} on all-sky survey imagery. The blue square is the ${(mapField.sizeDeg * 60).toFixed(1)}′ SPHEREx field you are blinking. Click anywhere, or on a name, to blink somewhere else.`}
+          field={mapField}
+          detector={view.detector}
+          startOpen
         />
       ) : null}
 

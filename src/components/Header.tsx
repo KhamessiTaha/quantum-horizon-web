@@ -34,6 +34,7 @@ export default function Header() {
         ) : (
           <nav aria-label="Main" className={styles.nav}>
             <a href="/#targets">Featured targets</a>
+            <a href="/#sky">Sky map</a>
             <a href="/#how">How it works</a>
             <Link to="/methods">Methods and limits</Link>
             <a href="/#data">About the data</a>
