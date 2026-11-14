@@ -228,7 +228,7 @@ export class ApiError extends Error {
 }
 
 export function imageUrl(path: string): string {
-  return path.startsWith("http") ? path : `${API_BASE}${path}`;
+  return path.startsWith("http") || path.startsWith("data:") ? path : `${API_BASE}${path}`;
 }
 
 export interface TargetQuery {
