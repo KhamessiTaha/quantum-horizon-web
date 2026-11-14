@@ -472,6 +472,6 @@ function describeError(error: string, status: number | null): string {
   if (status === 404) return error;
   if (status === 503) return `${error} The archive is answering slowly or is down; cached targets still work.`;
   if (status === null)
-    return "The live search server is offline right now, so new positions cannot be fetched. The five featured targets on the home page still work from saved SPHEREx data.";
+    return "The measurement server could not be reached. It may be starting up; try again in a few seconds.";
   return `Could not load this view. ${error}`;
 }

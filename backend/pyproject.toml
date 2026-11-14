@@ -1,0 +1,22 @@
+[project]
+name = "quantum-horizon-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi==0.162.0",
+  "uvicorn==0.54.0",
+  "pydantic==2.13.5",
+  "astropy==8.0.2",
+  "pyvo==1.9.1",
+  "reproject==0.21.0",
+  "scipy>=1.13,<2",
+  "numpy==2.5.4",
+  "pillow==12.3.0",
+  "requests==2.34.2",
+  "fsspec==2026.9.0",
+  "s3fs==2026.9.0",
+  "multidict==7.2.1",
+]
+
+[tool.vercel]
+entrypoint = "api.index:app"
