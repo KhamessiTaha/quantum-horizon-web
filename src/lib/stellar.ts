@@ -95,3 +95,14 @@ export function colourFromBV(bv: number): [number, number, number] {
 }
 
 export const LIGHT_YEARS_PER_PC = 3.2616;
+
+/** What the viewer resolves: challenge targets by their common name, everything else by its SIMBAD identifier. */
+export function blinkQuery(star: Pick<Neighbour, "id" | "name" | "target">): string {
+  return star.target ? star.name : star.id;
+}
+
+export function blinkLink(star: Pick<Neighbour, "id" | "name" | "target">, kind: Kind): string {
+  const target = blinkQuery(star);
+  const detector = star.name === "WISE 0855-0714" ? "D6" : isBrownDwarf(kind) ? "D5" : "D2";
+  return `/view?${new URLSearchParams({ target, det: detector, fov: "0.06", mode: "blink" }).toString()}`;
+}

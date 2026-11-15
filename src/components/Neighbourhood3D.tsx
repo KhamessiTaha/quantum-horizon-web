@@ -8,6 +8,8 @@ import BRIGHT from "../data/brightstars.json";
 import NEIGHBOURS from "../data/neighbourhood.json";
 import READY from "../data/ready.json";
 import {
+  blinkLink,
+  blinkQuery,
   colourFromBV,
   displaySize,
   isBrownDwarf,
@@ -30,10 +32,6 @@ const FLY_MS = 1300;
 type Filter = "all" | "ready" | "targets" | "brown" | "red" | "bright" | "planets";
 
 const READY_SET = new Set(READY as string[]);
-
-function blinkQuery(star: Neighbour): string {
-  return star.target ? star.name : star.id;
-}
 
 function isReady(star: Neighbour): boolean {
   return READY_SET.has(blinkQuery(star));
@@ -106,12 +104,6 @@ function webglAvailable(): boolean {
 
 function reducedMotion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
-}
-
-function blinkLink(star: Neighbour, kind: Kind): string {
-  const target = blinkQuery(star);
-  const detector = star.name === "WISE 0855-0714" ? "D6" : isBrownDwarf(kind) ? "D5" : "D2";
-  return `/view?${new URLSearchParams({ target, det: detector, fov: "0.06", mode: "blink" }).toString()}`;
 }
 
 interface SceneApi {

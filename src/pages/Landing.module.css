@@ -304,3 +304,15 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 0 56px;
+  scroll-margin-top: 16px;
+}
+
+.galleryHold {
+  height: 300px;
+}

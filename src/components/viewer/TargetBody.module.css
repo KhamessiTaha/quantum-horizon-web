@@ -1,0 +1,23 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stage {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+}
+
+.label {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--predicted);
+}

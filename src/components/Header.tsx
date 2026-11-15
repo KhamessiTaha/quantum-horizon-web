@@ -33,11 +33,11 @@ export default function Header() {
           </div>
         ) : (
           <nav aria-label="Main" className={styles.nav}>
-            <a href="/#targets">Featured targets</a>
-            <a href="/#sky">Sky map</a>
-            <a href="/#how">How it works</a>
+            <Link to="/#targets">Challenge targets</Link>
+            <Link to="/#neighbours">Neighbours</Link>
+            <Link to="/?explore=3d#sky">3D and sky map</Link>
+            <Link to="/#how">How it works</Link>
             <Link to="/methods">Methods and limits</Link>
-            <a href="/#data">About the data</a>
           </nav>
         )}
       </div>

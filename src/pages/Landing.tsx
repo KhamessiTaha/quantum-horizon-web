@@ -1,5 +1,5 @@
-import { useSearchParams } from "react-router-dom";
-import { lazy, Suspense, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import HeroBlink from "../components/HeroBlink.tsx";
 import HeroSky from "../components/HeroSky.tsx";
 import SearchBox from "../components/SearchBox.tsx";
@@ -12,6 +12,28 @@ import { useAsync } from "../lib/useAsync.ts";
 import styles from "./Landing.module.css";
 
 const Neighbourhood3D = lazy(() => import("../components/Neighbourhood3D.tsx"));
+const NeighbourGallery = lazy(() => import("../components/NeighbourGallery.tsx"));
+
+function useNearView<T extends Element>() {
+  const ref = useRef<T>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const watch = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          watch.disconnect();
+        }
+      },
+      { rootMargin: "400px" },
+    );
+    watch.observe(node);
+    return () => watch.disconnect();
+  }, []);
+  return [ref, near] as const;
+}
 
 const HERO_TARGET = { target: "Barnard's Star", ra: null, dec: null, detector: "D2", fovDeg: 0.06 };
 
@@ -47,6 +69,13 @@ export default function Landing() {
   const [activePass, setActivePass] = useState<number | null>(null);
   const [params] = useSearchParams();
   const [explore, setExplore] = useState<"sky" | "3d">(params.get("explore") === "sky" ? "sky" : "3d");
+  const location = useLocation();
+  const [galleryRef, galleryNear] = useNearView<HTMLElement>();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "start" });
+  }, [location.hash, location.key]);
   const strip = [
     ...(hero.data?.passes.map((p) => ({ label: `Pass ${p.index} · ${p.mid_date}`, image: p.image, pass: p.index })) ?? []),
     ...(hero.data?.difference_image ? [{ label: "Difference", image: hero.data.difference_image }] : []),
@@ -138,6 +167,20 @@ export default function Landing() {
             <TargetCard key={t.slug} target={t} />
           ))}
         </div>
+      </section>
+
+      <section id="neighbours" ref={galleryRef} className={`container ${styles.gallery}`}>
+        <div className={styles.sectionHead}>
+          <h2>Meet the neighbours</h2>
+          <p>From a Sun-like star to the coldest brown dwarf known. Click one to blink it.</p>
+        </div>
+        {galleryNear ? (
+          <Suspense fallback={<div className={styles.galleryHold} />}>
+            <NeighbourGallery />
+          </Suspense>
+        ) : (
+          <div className={styles.galleryHold} />
+        )}
       </section>
 
       <section id="sky" className={`container ${styles.explore}`}>

@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { lazy, Suspense, useCallback, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import FindingsPanel from "../components/viewer/FindingsPanel.tsx";
 import LightCurve from "../components/viewer/LightCurve.tsx";
 import Movers from "../components/viewer/Movers.tsx";
@@ -20,10 +20,14 @@ import {
   type LightCurveResponse,
   type SpectrumResponse,
 } from "../lib/api.ts";
+import { FEATURED_TARGETS, viewLink } from "../data/featuredTargets.ts";
+import { findNeighbour, NEIGHBOUR_LIST } from "../lib/neighbours.ts";
 import { useAsync } from "../lib/useAsync.ts";
 import { useColour } from "../lib/useColour.ts";
 import { parseViewState, queryKey, targetQuery, toSearchParams, type Panel, type ViewState } from "../lib/viewState.ts";
 import styles from "./Viewer.module.css";
+
+const TargetBody = lazy(() => import("../components/viewer/TargetBody.tsx"));
 
 const PANELS: { id: Panel; label: string }[] = [
   { id: "findings", label: "Sky map" },
@@ -91,6 +95,9 @@ export default function Viewer() {
       ? `RA ${view.ra.toFixed(4)}° · Dec ${view.dec >= 0 ? "+" : ""}${view.dec.toFixed(4)}°`
       : "Search for a name, or paste coordinates";
 
+  const neighbour = findNeighbour(target?.simbad_id, target?.name, view.target);
+  const currentName = (target?.name ?? view.target ?? "").toLowerCase();
+
   const mapField = frames.data
     ? { ra: frames.data.grid.ra, dec: frames.data.grid.dec, sizeDeg: frames.data.grid.fov_deg }
     : view.ra !== null && view.dec !== null
@@ -132,10 +139,39 @@ export default function Viewer() {
 
   return (
     <main className={`container ${styles.page}`}>
+      <nav aria-label="Blink another" className={styles.another}>
+        <Link to="/" className={styles.back}>
+          ← Home
+        </Link>
+        <span className={styles.anotherLabel}>Blink another</span>
+        <div className={styles.chips}>
+          {FEATURED_TARGETS.map((t) => (
+            <Link
+              key={t.slug}
+              to={viewLink(t)}
+              className={styles.chip}
+              aria-current={currentName === t.name.toLowerCase() ? "page" : undefined}
+            >
+              {t.name}
+            </Link>
+          ))}
+        </div>
+        <Link to="/?explore=3d#sky" className={styles.explore}>
+          {NEIGHBOUR_LIST.length} neighbours in 3D →
+        </Link>
+      </nav>
+
       <div className={styles.titleRow}>
-        <div className={styles.titleText}>
-          <h1>{heading}</h1>
-          <p className="mono">{position}</p>
+        <div className={styles.titleLead}>
+          {neighbour ? (
+            <Suspense fallback={null}>
+              <TargetBody star={neighbour} />
+            </Suspense>
+          ) : null}
+          <div className={styles.titleText}>
+            <h1>{heading}</h1>
+            <p className="mono">{position}</p>
+          </div>
         </div>
         <ShareButtons frames={frames.data} />
       </div>

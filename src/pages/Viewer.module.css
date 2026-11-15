@@ -13,6 +13,94 @@
   gap: 12px 24px;
 }
 
+.titleLead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  min-width: 0;
+}
+
+.another {
+  display: flex;
+  align-items: center;
+  gap: 10px 14px;
+  min-width: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.back {
+  flex: none;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.anotherLabel {
+  flex: none;
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+  color: var(--text-quiet);
+}
+
+.chips {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.chip {
+  flex: none;
+  padding: 4px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.chip[aria-current="page"] {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--text);
+}
+
+.explore {
+  flex: none;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .another {
+    flex-wrap: wrap;
+  }
+
+  .anotherLabel {
+    display: none;
+  }
+
+  .chips {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
 .titleText h1 {
   margin: 0;
   font-size: 30px;

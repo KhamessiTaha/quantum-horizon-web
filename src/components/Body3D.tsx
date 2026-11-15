@@ -108,7 +108,17 @@ function seedOf(text: string): number {
 }
 
 /** An artist's impression of a star or brown dwarf, chosen from its spectral type. It is not an image of the object. */
-export default function Body3D({ kind, id }: { kind: Kind; id: string }) {
+export default function Body3D({
+  kind,
+  id,
+  className,
+  caption = true,
+}: {
+  kind: Kind;
+  id: string;
+  className?: string;
+  caption?: boolean;
+}) {
   const holder = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -156,9 +166,10 @@ export default function Body3D({ kind, id }: { kind: Kind; id: string }) {
 
     const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
     const clock = new THREE.Clock();
-    const animation = { frame: 0 };
+    const animation = { frame: 0, visible: true };
     const loop = () => {
       animation.frame = requestAnimationFrame(loop);
+      if (!animation.visible) return;
       const t = clock.getElapsedTime();
       if (!still) {
         uniforms.uTime.value = t;
@@ -168,8 +179,22 @@ export default function Body3D({ kind, id }: { kind: Kind; id: string }) {
     };
     loop();
 
+    const resize = new ResizeObserver(() => {
+      if (!host.clientWidth || !host.clientHeight) return;
+      renderer.setSize(host.clientWidth, host.clientHeight);
+      camera.aspect = host.clientWidth / host.clientHeight;
+      camera.updateProjectionMatrix();
+    });
+    resize.observe(host);
+    const seen = new IntersectionObserver(([entry]) => {
+      animation.visible = entry.isIntersecting;
+    });
+    seen.observe(host);
+
     return () => {
       cancelAnimationFrame(animation.frame);
+      resize.disconnect();
+      seen.disconnect();
       body.geometry.dispose();
       (body.material as THREE.Material).dispose();
       glow.geometry.dispose();
@@ -181,8 +206,8 @@ export default function Body3D({ kind, id }: { kind: Kind; id: string }) {
 
   return (
     <figure className={styles.figure}>
-      <div ref={holder} className={styles.stage} />
-      <figcaption className={styles.caption}>Artist’s impression from the spectral type · not an image</figcaption>
+      <div ref={holder} className={`${styles.stage} ${className ?? ""}`} />
+      {caption ? <figcaption className={styles.caption}>Artist’s impression from the spectral type · not an image</figcaption> : null}
     </figure>
   );
 }
