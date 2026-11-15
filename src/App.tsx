@@ -3,6 +3,7 @@ import Header from "./components/Header.tsx";
 import Explore from "./pages/Explore.tsx";
 import Landing from "./pages/Landing.tsx";
 import Methods from "./pages/Methods.tsx";
+import Survey from "./pages/Survey.tsx";
 import Track from "./pages/Track.tsx";
 import Viewer from "./pages/Viewer.tsx";
 
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/methods" element={<Methods />} />
         <Route path="/track" element={<Track />} />
+        <Route path="/survey" element={<Survey />} />
         <Route path="*" element={<Landing />} />
       </Routes>
     </>

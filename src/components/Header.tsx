@@ -37,7 +37,7 @@ export default function Header() {
         ) : (
           <nav aria-label="Main" className={styles.nav}>
             <Link to="/#targets">Challenge targets</Link>
-            <Link to="/#neighbours">Neighbours</Link>
+            <Link to="/survey">Asteroid result</Link>
             <Link to="/explore">Explore in 3D</Link>
             <Link to="/?explore=sky#sky">Sky map</Link>
             <Link to="/#how">How it works</Link>

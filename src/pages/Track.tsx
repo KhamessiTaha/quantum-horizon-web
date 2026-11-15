@@ -4,12 +4,14 @@ import Badge from "../components/Badge.tsx";
 import { BLINKABLE_ASTEROIDS, trackLink } from "../data/asteroids.ts";
 import { fetchTrack, type TrackResponse } from "../lib/api.ts";
 import { useAsync } from "../lib/useAsync.ts";
+import SURVEY from "../data/asteroid_survey.json";
 import styles from "./Track.module.css";
 
 const Body3D = lazy(() => import("../components/Body3D.tsx"));
 
 const DETECTORS = ["D1", "D2", "D3", "D4", "D5", "D6"];
 const STEP_MS = 650;
+const SURVEY_COUNT = (SURVEY as { results: unknown[] }).results.length;
 
 export default function Track() {
   const [params] = useSearchParams();
@@ -55,8 +57,8 @@ export default function Track() {
             </Link>
           ))}
         </div>
-        <Link to="/explore?view=solar" className={styles.explore}>
-          Solar System in 3D →
+        <Link to="/survey" className={styles.explore}>
+          Orbit check of {SURVEY_COUNT} asteroids →
         </Link>
       </nav>
 

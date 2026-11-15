@@ -5,6 +5,7 @@ import HeroBlink from "../components/HeroBlink.tsx";
 import HeroSky from "../components/HeroSky.tsx";
 import SearchBox from "../components/SearchBox.tsx";
 import SkyMap from "../components/SkyMap.tsx";
+import SurveyBand from "../components/SurveyBand.tsx";
 import TargetCard from "../components/TargetCard.tsx";
 import { FEATURED_TARGETS } from "../data/featuredTargets.ts";
 import NEIGHBOURS from "../data/neighbourhood.json";
@@ -186,6 +187,8 @@ export default function Landing() {
           ))}
         </div>
       </section>
+
+      <SurveyBand />
 
       <section id="neighbours" ref={galleryRef} className={`container ${styles.gallery}`}>
         <div className={styles.sectionHead}>
