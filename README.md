@@ -43,6 +43,8 @@ React, TypeScript and Vite, with CSS modules and no UI framework.
   anywhere, or on a name, to blink it.
 - `src/components/SearchBox.tsx` — names, decimal or sexagesimal coordinates, and suggestions as you type.
 - `src/components/HeroBlink.tsx` — the home page's live blink of Barnard's Star.
+- `src/components/Neighbourhood3D.tsx` — the 3D map of the Sun's neighbourhood (three.js), built from
+  `src/data/neighbourhood.json` and `src/data/brightstars.json`, both queried from SIMBAD.
 - `src/lib/useColour.ts` — the colour view: detectors 6, 3 and 1 as red, green and blue, built in the browser.
 - `src/lib/exportData.ts` — CSV and JSON downloads of a view, with a citation line.
 - `src/lib/viewState.ts` — every setting lives in the URL, so any view can be shared or embedded (`&embed=1`).
