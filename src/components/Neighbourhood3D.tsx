@@ -1,64 +1,78 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
+import BRIGHT from "../data/brightstars.json";
 import NEIGHBOURS from "../data/neighbourhood.json";
+import {
+  colourFromBV,
+  displaySize,
+  isBrownDwarf,
+  KIND_COLOUR,
+  KIND_LABEL,
+  kindOf,
+  LIGHT_YEARS_PER_PC,
+  type Kind,
+  type Neighbour,
+} from "../lib/stellar.ts";
 import styles from "./Neighbourhood3D.module.css";
 
-interface Neighbour {
-  query: string;
-  name: string;
-  group: string;
-  ra: number;
-  dec: number;
-  parallax_mas: number;
-  distance_pc: number;
-  pmra: number;
-  pmdec: number;
-  xyz_pc: number[];
-  source: string | null;
-}
-
-const STARS = NEIGHBOURS as Neighbour[];
-const LIGHT_YEARS_PER_PC = 3.2616;
+const STARS = (NEIGHBOURS as Neighbour[]).slice().sort((a, b) => a.d - b.d);
+const SKY = BRIGHT as number[][];
+const SKY_RADIUS = 300;
 const MOTION_YEARS = 10000;
-const RINGS_PC = [2, 4, 6, 8, 10, 12];
+const RINGS_PC = [2, 4, 6, 8];
+const FLY_MS = 1300;
 
-const LOOK: Record<string, { colour: string; size: number; label: string }> = {
-  "Challenge targets": { colour: "#5cc8ff", size: 0.16, label: "Challenge target" },
-  "Bright neighbours": { colour: "#f4f1e8", size: 0.2, label: "Bright star" },
-  "Red dwarfs": { colour: "#ff8a5c", size: 0.12, label: "Red dwarf" },
-  "Brown dwarfs": { colour: "#c084fc", size: 0.1, label: "Brown dwarf" },
-};
+type Filter = "all" | "targets" | "brown" | "red" | "bright" | "planets";
 
-const DETECTOR_FOR: Record<string, string> = {
-  "Challenge targets": "D2",
-  "Bright neighbours": "D2",
-  "Red dwarfs": "D2",
-  "Brown dwarfs": "D5",
-};
+const FILTERS: { id: Filter; label: string; keep: (star: Neighbour, kind: Kind) => boolean }[] = [
+  { id: "all", label: "All", keep: () => true },
+  { id: "targets", label: "Challenge targets", keep: (s) => !!s.target },
+  { id: "brown", label: "Brown dwarfs", keep: (_, k) => isBrownDwarf(k) },
+  { id: "red", label: "Red dwarfs", keep: (_, k) => k === "M" },
+  { id: "bright", label: "Bright stars", keep: (_, k) => "OBAFGK".includes(k) },
+  { id: "planets", label: "Planet hosts", keep: (s) => s.planets > 0 },
+];
 
-function blinkLink(star: Neighbour): string {
-  const detector = star.query === "WISE 0855-0714" ? "D6" : star.query === "Epsilon Indi B" ? "D5" : DETECTOR_FOR[star.group];
-  return `/view?${new URLSearchParams({ target: star.query, det: detector, fov: "0.06", mode: "blink" }).toString()}`;
-}
-
-/** Equatorial x, y, z (z to the celestial north pole) to three.js, which has y up. */
 function toScene([x, y, z]: number[]): THREE.Vector3 {
   return new THREE.Vector3(x, z, -y);
 }
 
-/** Where proper motion carries the star across the sky in MOTION_YEARS, at its distance. Radial motion is not included. */
+function unitFromRaDec(ra: number, dec: number): number[] {
+  const a = THREE.MathUtils.degToRad(ra);
+  const d = THREE.MathUtils.degToRad(dec);
+  return [Math.cos(d) * Math.cos(a), Math.cos(d) * Math.sin(a), Math.sin(d)];
+}
+
 function drift(star: Neighbour): THREE.Vector3 {
   const ra = THREE.MathUtils.degToRad(star.ra);
   const dec = THREE.MathUtils.degToRad(star.dec);
   const masToRad = Math.PI / (180 * 3.6e6);
   const east = [-Math.sin(ra), Math.cos(ra), 0];
   const north = [-Math.sin(dec) * Math.cos(ra), -Math.sin(dec) * Math.sin(ra), Math.cos(dec)];
-  const da = star.pmra * MOTION_YEARS * masToRad * star.distance_pc;
-  const dd = star.pmdec * MOTION_YEARS * masToRad * star.distance_pc;
+  const da = star.pmra * MOTION_YEARS * masToRad * star.d;
+  const dd = star.pmdec * MOTION_YEARS * masToRad * star.d;
   return toScene([0, 1, 2].map((i) => east[i] * da + north[i] * dd));
+}
+
+function glowTexture(): THREE.Texture {
+  const size = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+  const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gradient.addColorStop(0, "rgba(255,255,255,1)");
+  gradient.addColorStop(0.12, "rgba(255,255,255,0.95)");
+  gradient.addColorStop(0.3, "rgba(255,255,255,0.35)");
+  gradient.addColorStop(0.6, "rgba(255,255,255,0.08)");
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, size, size);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
 }
 
 function label(text: string, className: string): CSS2DObject {
@@ -81,21 +95,52 @@ function reducedMotion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
 }
 
-/** The Sun's neighbourhood in 3D, from SIMBAD parallaxes: every position and arrow comes from catalog data. */
+function blinkLink(star: Neighbour, kind: Kind): string {
+  const target = star.target ? star.name : star.id;
+  const detector = star.name === "WISE 0855-0714" ? "D6" : isBrownDwarf(kind) ? "D5" : "D2";
+  return `/view?${new URLSearchParams({ target, det: detector, fov: "0.06", mode: "blink" }).toString()}`;
+}
+
+interface SceneApi {
+  flyTo: (star: Neighbour) => void;
+  setMotion: (visible: boolean) => void;
+  setHighlight: (ids: Set<string>) => void;
+}
+
+/** The Sun's neighbourhood, built from SIMBAD: positions from parallaxes, colours from spectral types, sizes from
+ * catalog magnitudes, and a backdrop of the real naked-eye sky coloured by each star's B−V. */
 export default function Neighbourhood3D() {
   const holder = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<Neighbour | null>(null);
+  const api = useRef<SceneApi | null>(null);
   const [error] = useState<string | null>(() => (webglAvailable() ? null : "This browser cannot draw 3D graphics."));
+  const [selected, setSelected] = useState<Neighbour | null>(null);
+  const [filter, setFilter] = useState<Filter>("all");
+  const [search, setSearch] = useState("");
+  const [motion, setMotion] = useState(false);
+
+  const listed = useMemo(() => {
+    const rule = FILTERS.find((f) => f.id === filter) ?? FILTERS[0];
+    const text = search.trim().toLowerCase();
+    return STARS.filter((s) => rule.keep(s, kindOf(s)) && (!text || `${s.name} ${s.id} ${s.sp}`.toLowerCase().includes(text)));
+  }, [filter, search]);
+
+  useEffect(() => {
+    api.current?.setHighlight(new Set(listed.map((s) => s.id)));
+  }, [listed]);
+
+  useEffect(() => {
+    api.current?.setMotion(motion);
+  }, [motion]);
 
   useEffect(() => {
     const host = holder.current;
     if (!host || error) return;
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     const width = () => host.clientWidth;
     const height = () => host.clientHeight;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width(), height());
-    renderer.setClearColor("#05070a");
+    renderer.setClearColor("#020306");
     host.append(renderer.domElement);
 
     const labels = new CSS2DRenderer();
@@ -104,98 +149,124 @@ export default function Neighbourhood3D() {
     host.append(labels.domElement);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width() / height(), 0.05, 400);
-    camera.position.set(7.5, 5, 8.5);
-
+    const camera = new THREE.PerspectiveCamera(50, width() / height(), 0.01, 1000);
+    camera.position.set(9.5, 6, 11);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.minDistance = 2;
+    controls.dampingFactor = 0.08;
+    controls.minDistance = 0.25;
     controls.maxDistance = 60;
     controls.autoRotate = !reducedMotion();
-    controls.autoRotateSpeed = 0.5;
+    controls.autoRotateSpeed = 0.35;
+    controls.addEventListener("start", () => {
+      controls.autoRotate = false;
+    });
 
-    const sun = new THREE.Mesh(new THREE.SphereGeometry(0.22, 32, 16), new THREE.MeshBasicMaterial({ color: "#ffd166" }));
-    scene.add(sun);
-    sun.add(label("Sun", styles.sunLabel));
-    const glow = new THREE.Mesh(
-      new THREE.SphereGeometry(0.5, 32, 16),
-      new THREE.MeshBasicMaterial({ color: "#ffd166", transparent: true, opacity: 0.12 }),
+    const glow = glowTexture();
+
+    const skyGroups = new Map<number, { positions: number[]; colours: number[] }>();
+    for (const [ra, dec, v, bv] of SKY) {
+      const bin = v < 1.5 ? 0 : v < 3 ? 1 : v < 4.5 ? 2 : 3;
+      const group = skyGroups.get(bin) ?? { positions: [], colours: [] };
+      const p = toScene(unitFromRaDec(ra, dec)).multiplyScalar(SKY_RADIUS);
+      group.positions.push(p.x, p.y, p.z);
+      const [r, g, b] = colourFromBV(bv);
+      const fade = bin === 3 ? 0.55 : bin === 2 ? 0.75 : 1;
+      group.colours.push(r * fade, g * fade, b * fade);
+      skyGroups.set(bin, group);
+    }
+    for (const [bin, group] of skyGroups) {
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.Float32BufferAttribute(group.positions, 3));
+      geometry.setAttribute("color", new THREE.Float32BufferAttribute(group.colours, 3));
+      scene.add(
+        new THREE.Points(
+          geometry,
+          new THREE.PointsMaterial({
+            size: [6.5, 4.5, 3.2, 2.2][bin],
+            sizeAttenuation: false,
+            vertexColors: true,
+            map: glow,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+          }),
+        ),
+      );
+    }
+
+    const sun = new THREE.Sprite(
+      new THREE.SpriteMaterial({ map: glow, color: KIND_COLOUR.G, blending: THREE.AdditiveBlending, depthWrite: false }),
     );
-    scene.add(glow);
+    sun.scale.setScalar(0.18 * 7);
+    scene.add(sun);
+    const sunLabel = label("Sun", styles.sunLabel);
+    sunLabel.position.set(0, 0.22, 0);
+    scene.add(sunLabel);
 
     for (const radius of RINGS_PC) {
-      const points = Array.from({ length: 129 }, (_, i) => {
-        const angle = (i / 128) * Math.PI * 2;
+      const points = Array.from({ length: 161 }, (_, i) => {
+        const angle = (i / 160) * Math.PI * 2;
         return new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
       });
-      const ring = new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints(points),
-        new THREE.LineBasicMaterial({ color: "#5cc8ff", transparent: true, opacity: radius % 4 === 0 ? 0.28 : 0.12 }),
+      scene.add(
+        new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(points),
+          new THREE.LineBasicMaterial({ color: "#5cc8ff", transparent: true, opacity: radius % 4 === 0 ? 0.16 : 0.07 }),
+        ),
       );
-      scene.add(ring);
       if (radius % 4 === 0) {
-        const tag = label(`${radius} pc · ${(radius * LIGHT_YEARS_PER_PC).toFixed(0)} ly`, styles.ringLabel);
+        const tag = label(`${radius} pc · ${Math.round(radius * LIGHT_YEARS_PER_PC)} ly`, styles.ringLabel);
         tag.position.set(radius, 0, 0);
         scene.add(tag);
       }
     }
 
-    const pickable: THREE.Mesh[] = [];
+    const sprites = new Map<string, THREE.Sprite>();
+    const arrows: THREE.ArrowHelper[] = [];
     for (const star of STARS) {
-      const look = LOOK[star.group] ?? LOOK["Red dwarfs"];
-      const position = toScene(star.xyz_pc);
-      const body = new THREE.Mesh(
-        new THREE.SphereGeometry(look.size, 20, 12),
-        new THREE.MeshBasicMaterial({ color: look.colour }),
+      const kind = kindOf(star);
+      const colour = KIND_COLOUR[kind];
+      const position = toScene(star.xyz);
+      const size = displaySize(star);
+      const sprite = new THREE.Sprite(
+        new THREE.SpriteMaterial({ map: glow, color: colour, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }),
       );
-      body.position.copy(position);
-      body.userData.star = star;
-      scene.add(body);
-      pickable.push(body);
+      sprite.position.copy(position);
+      sprite.scale.setScalar(size * 7);
+      sprite.userData = { star };
+      scene.add(sprite);
+      sprites.set(star.id, sprite);
 
-      const halo = new THREE.Mesh(
-        new THREE.SphereGeometry(look.size * 2, 20, 12),
-        new THREE.MeshBasicMaterial({ color: look.colour, transparent: true, opacity: 0.12, depthWrite: false }),
+      scene.add(
+        new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints([position, new THREE.Vector3(position.x, 0, position.z)]),
+          new THREE.LineBasicMaterial({ color: colour, transparent: true, opacity: star.target ? 0.35 : 0.035 }),
+        ),
       );
-      halo.position.copy(position);
-      scene.add(halo);
 
-      const stem = new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints([position, new THREE.Vector3(position.x, 0, position.z)]),
-        new THREE.LineBasicMaterial({ color: look.colour, transparent: true, opacity: 0.18 }),
-      );
-      scene.add(stem);
-
-      const motion = drift(star);
-      if (motion.length() > 0.02) {
-        const arrow = new THREE.ArrowHelper(
-          motion.clone().normalize(),
-          position,
-          motion.length(),
-          look.colour,
-          Math.min(0.18, motion.length() * 0.35),
-          Math.min(0.1, motion.length() * 0.2),
-        );
-        (arrow.line.material as THREE.LineBasicMaterial).transparent = true;
-        (arrow.line.material as THREE.LineBasicMaterial).opacity = 0.55;
+      const move = drift(star);
+      if (move.length() > 0.02) {
+        const arrow = new THREE.ArrowHelper(move.clone().normalize(), position, move.length(), colour, 0.12, 0.06);
+        arrow.visible = false;
         scene.add(arrow);
+        arrows.push(arrow);
       }
 
-      if (star.group === "Challenge targets") {
+      if (star.target) {
         const ring = new THREE.Mesh(
-          new THREE.RingGeometry(0.26, 0.3, 40),
+          new THREE.RingGeometry(0.2, 0.214, 64),
           new THREE.MeshBasicMaterial({ color: "#5cc8ff", side: THREE.DoubleSide, transparent: true, opacity: 0.9 }),
         );
         ring.position.copy(position);
         ring.userData.faceCamera = true;
         scene.add(ring);
-      }
-      const crowded =
-        star.group !== "Challenge targets" &&
-        STARS.some((other) => other.group === "Challenge targets" && toScene(other.xyz_pc).distanceTo(position) < 0.6);
-      if ((star.group === "Challenge targets" || star.group === "Bright neighbours") && !crowded) {
-        const tag = label(star.query, star.group === "Challenge targets" ? styles.targetLabel : styles.starLabel);
-        tag.position.copy(position).add(new THREE.Vector3(0, 0.32, 0));
+        const tag = label(star.name, styles.targetLabel);
+        tag.position.copy(position).add(new THREE.Vector3(0, 0.3, 0));
+        scene.add(tag);
+      } else if (size > 0.2 || star.planets >= 3) {
+        const tag = label(star.name, styles.starLabel);
+        tag.position.copy(position).add(new THREE.Vector3(0, size * 1.4, 0));
         scene.add(tag);
       }
     }
@@ -203,26 +274,69 @@ export default function Neighbourhood3D() {
     const hover = label("", styles.hoverLabel);
     hover.visible = false;
     scene.add(hover);
+    const focus = label("", styles.focusLabel);
+    focus.visible = false;
+    scene.add(focus);
+
+    const flight = {
+      active: false,
+      start: 0,
+      fromTarget: new THREE.Vector3(),
+      toTarget: new THREE.Vector3(),
+      fromCamera: new THREE.Vector3(),
+      toCamera: new THREE.Vector3(),
+    };
+
+    api.current = {
+      flyTo(star) {
+        const position = toScene(star.xyz);
+        const direction = camera.position.clone().sub(controls.target).normalize();
+        const distance = Math.max(2.4, displaySize(star) * 12);
+        flight.fromTarget.copy(controls.target);
+        flight.toTarget.copy(position);
+        flight.fromCamera.copy(camera.position);
+        flight.toCamera.copy(position).add(direction.multiplyScalar(distance));
+        flight.start = performance.now();
+        flight.active = true;
+        controls.autoRotate = false;
+        (focus.element as HTMLElement).textContent = star.name;
+        focus.position.copy(position).add(new THREE.Vector3(0, displaySize(star) * 1.6, 0));
+        focus.visible = !star.target;
+        if (reducedMotion()) {
+          controls.target.copy(flight.toTarget);
+          camera.position.copy(flight.toCamera);
+          flight.active = false;
+        }
+      },
+      setMotion(visible) {
+        for (const arrow of arrows) arrow.visible = visible;
+      },
+      setHighlight(ids) {
+        for (const [id, sprite] of sprites) {
+          (sprite.material as THREE.SpriteMaterial).opacity = ids.has(id) ? 1 : 0.18;
+        }
+      },
+    };
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     const gesture = { dragged: false };
+    const pickable = [...sprites.values()];
 
     function pick(event: PointerEvent): Neighbour | null {
       const bounds = renderer.domElement.getBoundingClientRect();
       pointer.set(((event.clientX - bounds.left) / bounds.width) * 2 - 1, -((event.clientY - bounds.top) / bounds.height) * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(pickable, false)[0];
-      return hit ? (hit.object.userData.star as Neighbour) : null;
+      const hits = raycaster.intersectObjects(pickable, false);
+      return hits.length ? (hits[0].object.userData.star as Neighbour) : null;
     }
-
     function onMove(event: PointerEvent) {
       if (event.buttons) gesture.dragged = true;
       const star = pick(event);
       renderer.domElement.style.cursor = star ? "pointer" : "grab";
       if (star) {
-        (hover.element as HTMLElement).textContent = `${star.query} · ${star.distance_pc.toFixed(2)} pc`;
-        hover.position.copy(toScene(star.xyz_pc)).add(new THREE.Vector3(0, -0.32, 0));
+        (hover.element as HTMLElement).textContent = `${star.name} · ${(star.d * LIGHT_YEARS_PER_PC).toFixed(1)} ly`;
+        hover.position.copy(toScene(star.xyz)).add(new THREE.Vector3(0, -displaySize(star) * 1.4, 0));
         hover.visible = true;
       } else {
         hover.visible = false;
@@ -236,7 +350,7 @@ export default function Neighbourhood3D() {
       const star = pick(event);
       if (star) {
         setSelected(star);
-        controls.autoRotate = false;
+        api.current?.flyTo(star);
       }
     }
     renderer.domElement.addEventListener("pointermove", onMove);
@@ -251,9 +365,16 @@ export default function Neighbourhood3D() {
     });
     resize.observe(host);
 
-    let frame = 0;
-    const loop = () => {
-      frame = requestAnimationFrame(loop);
+    const animation = { frame: 0 };
+    const loop = (now: number) => {
+      animation.frame = requestAnimationFrame(loop);
+      if (flight.active) {
+        const t = Math.min(1, (now - flight.start) / FLY_MS);
+        const k = t * t * (3 - 2 * t);
+        controls.target.lerpVectors(flight.fromTarget, flight.toTarget, k);
+        camera.position.lerpVectors(flight.fromCamera, flight.toCamera, k);
+        if (t >= 1) flight.active = false;
+      }
       controls.update();
       scene.traverse((object) => {
         if (object.userData.faceCamera) object.quaternion.copy(camera.quaternion);
@@ -261,15 +382,16 @@ export default function Neighbourhood3D() {
       renderer.render(scene, camera);
       labels.render(scene, camera);
     };
-    loop();
+    animation.frame = requestAnimationFrame(loop);
 
     return () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(animation.frame);
       resize.disconnect();
       renderer.domElement.removeEventListener("pointermove", onMove);
       renderer.domElement.removeEventListener("pointerdown", onDown);
       renderer.domElement.removeEventListener("pointerup", onUp);
       controls.dispose();
+      glow.dispose();
       scene.traverse((object) => {
         const mesh = object as THREE.Mesh;
         mesh.geometry?.dispose();
@@ -280,58 +402,107 @@ export default function Neighbourhood3D() {
       renderer.dispose();
       renderer.domElement.remove();
       labels.domElement.remove();
+      api.current = null;
     };
   }, [error]);
 
-  const look = selected ? (LOOK[selected.group] ?? LOOK["Red dwarfs"]) : null;
-  const motion = selected ? Math.hypot(selected.pmra, selected.pmdec) / 1000 : 0;
+  function choose(star: Neighbour) {
+    setSelected(star);
+    api.current?.flyTo(star);
+  }
+
+  const kind = selected ? kindOf(selected) : null;
+  const speed = selected ? Math.hypot(selected.pmra, selected.pmdec) / 1000 : 0;
 
   return (
     <div className={styles.wrap}>
-      {error ? <p className={styles.error}>{error}</p> : <div ref={holder} className={styles.stage} />}
-      <div className={styles.legend} aria-hidden="true">
-        {Object.entries(LOOK).map(([group, l]) => (
-          <span key={group}>
-            <i style={{ background: l.colour }} />
-            {l.label}
+      <div className={styles.layout}>
+        <div className={styles.stageWrap}>
+          {error ? <p className={styles.error}>{error}</p> : <div ref={holder} className={styles.stage} />}
+          {selected && kind ? (
+            <aside className={styles.card} aria-live="polite">
+              <button type="button" className={styles.close} onClick={() => setSelected(null)} aria-label="Close">
+                ×
+              </button>
+              <span className={styles.kind} style={{ color: KIND_COLOUR[kind] }}>
+                {KIND_LABEL[kind]}
+                {selected.target ? " · challenge target" : ""}
+              </span>
+              <strong className={styles.title}>{selected.name}</strong>
+              <span className={`mono ${styles.id}`}>{selected.id}</span>
+              <dl className={styles.facts}>
+                <div>
+                  <dt>Distance</dt>
+                  <dd className="mono">
+                    {(selected.d * LIGHT_YEARS_PER_PC).toFixed(2)} ly · {selected.d.toFixed(2)} pc
+                  </dd>
+                </div>
+                {selected.sp ? (
+                  <div>
+                    <dt>Spectral type</dt>
+                    <dd className="mono">{selected.sp}</dd>
+                  </div>
+                ) : null}
+                <div>
+                  <dt>Motion on the sky</dt>
+                  <dd className="mono">{speed.toFixed(2)}″ per year</dd>
+                </div>
+                {selected.planets ? (
+                  <div>
+                    <dt>Known planets</dt>
+                    <dd className="mono">{selected.planets}</dd>
+                  </div>
+                ) : null}
+              </dl>
+              <Link to={blinkLink(selected, kind)} className="btn btn-primary" onClick={() => window.scrollTo({ top: 0 })}>
+                Blink it with SPHEREx
+              </Link>
+            </aside>
+          ) : null}
+          <label className={styles.motionToggle}>
+            <input type="checkbox" checked={motion} onChange={(e) => setMotion(e.target.checked)} />
+            Motion over 10,000 years
+          </label>
+        </div>
+        <div className={styles.side}>
+          <input
+            className={`mono ${styles.search}`}
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Find a star or brown dwarf"
+            aria-label="Find a star or brown dwarf"
+          />
+          <div className={styles.filters} role="group" aria-label="Show">
+            {FILTERS.map((f) => (
+              <button key={f.id} type="button" className={styles.filter} aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
+                {f.label}
+              </button>
+            ))}
+          </div>
+          <ul className={styles.list}>
+            {listed.map((star) => {
+              const k = kindOf(star);
+              return (
+                <li key={star.id}>
+                  <button type="button" className={styles.item} aria-pressed={selected?.id === star.id} onClick={() => choose(star)}>
+                    <i style={{ background: KIND_COLOUR[k] }} />
+                    <span className={styles.itemName}>{star.name}</span>
+                    <span className={`mono ${styles.itemMeta}`}>{(star.d * LIGHT_YEARS_PER_PC).toFixed(1)} ly</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <span className={styles.count}>
+            {listed.length} of {STARS.length} shown
           </span>
-        ))}
+        </div>
       </div>
-      {selected && look ? (
-        <aside className={styles.card} aria-live="polite">
-          <button type="button" className={styles.close} onClick={() => setSelected(null)} aria-label="Close">
-            ×
-          </button>
-          <span className={styles.kind} style={{ color: look.colour }}>
-            {look.label}
-          </span>
-          <strong className={styles.title}>{selected.query}</strong>
-          <span className={`mono ${styles.id}`}>{selected.name}</span>
-          <dl className={styles.facts}>
-            <div>
-              <dt>Distance</dt>
-              <dd className="mono">
-                {selected.distance_pc.toFixed(2)} pc · {(selected.distance_pc * LIGHT_YEARS_PER_PC).toFixed(1)} ly
-              </dd>
-            </div>
-            <div>
-              <dt>Motion on the sky</dt>
-              <dd className="mono">{motion.toFixed(2)}″ per year</dd>
-            </div>
-            <div>
-              <dt>Parallax</dt>
-              <dd className="mono">{selected.parallax_mas.toFixed(1)} mas</dd>
-            </div>
-          </dl>
-          <Link to={blinkLink(selected)} className="btn btn-primary" onClick={() => window.scrollTo({ top: 0 })}>
-            Blink it with SPHEREx
-          </Link>
-        </aside>
-      ) : null}
       <p className={styles.note}>
-        {STARS.length} stars and brown dwarfs placed by their SIMBAD parallaxes, the Sun at the centre. Arrows show where
-        each drifts across the sky in {MOTION_YEARS.toLocaleString()} years from its measured proper motion; motion towards
-        or away from us is not shown. Drag to turn, scroll to zoom, click a star.
+        {STARS.length} stars and brown dwarfs within about 7 parsecs, from SIMBAD: positions from parallaxes, colours from
+        spectral types, sizes from catalog magnitudes. Behind them, the {SKY.length.toLocaleString()} brightest stars of
+        the real sky, coloured by their B−V index. Drag to turn, scroll to zoom, click a star or pick one from the list.
       </p>
     </div>
   );
