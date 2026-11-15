@@ -12,6 +12,7 @@ import { useAsync } from "../lib/useAsync.ts";
 import styles from "./Landing.module.css";
 
 const Neighbourhood3D = lazy(() => import("../components/Neighbourhood3D.tsx"));
+const SolarSystem3D = lazy(() => import("../components/SolarSystem3D.tsx"));
 const NeighbourGallery = lazy(() => import("../components/NeighbourGallery.tsx"));
 
 function useNearView<T extends Element>() {
@@ -34,6 +35,8 @@ function useNearView<T extends Element>() {
   }, []);
   return [ref, near] as const;
 }
+
+type Explore = "3d" | "solar" | "sky";
 
 const HERO_TARGET = { target: "Barnard's Star", ra: null, dec: null, detector: "D2", fovDeg: 0.06 };
 
@@ -68,7 +71,8 @@ export default function Landing() {
   const motion = hero.data?.measurement?.motion ?? null;
   const [activePass, setActivePass] = useState<number | null>(null);
   const [params] = useSearchParams();
-  const [explore, setExplore] = useState<"sky" | "3d">(params.get("explore") === "sky" ? "sky" : "3d");
+  const requested = params.get("explore");
+  const [explore, setExplore] = useState<Explore>(requested === "sky" || requested === "solar" ? requested : "3d");
   const location = useLocation();
   const [galleryRef, galleryNear] = useNearView<HTMLElement>();
 
@@ -199,11 +203,14 @@ export default function Landing() {
       <section id="sky" className={`container ${styles.explore}`}>
         <div className={styles.sectionHead}>
           <h2>Explore, then blink</h2>
-          <p>Fly through the Sun's neighbourhood in 3D, or pan the infrared sky, and blink anything you find.</p>
+          <p>Fly through the Sun's neighbourhood or the Solar System in 3D, or pan the infrared sky, and blink what you find.</p>
         </div>
         <div className={styles.exploreTabs} role="tablist" aria-label="Explore">
           <button type="button" role="tab" className="btn toggle" aria-selected={explore === "3d"} onClick={() => setExplore("3d")}>
             3D neighbourhood
+          </button>
+          <button type="button" role="tab" className="btn toggle" aria-selected={explore === "solar"} onClick={() => setExplore("solar")}>
+            Solar System
           </button>
           <button type="button" role="tab" className="btn toggle" aria-selected={explore === "sky"} onClick={() => setExplore("sky")}>
             Sky map
@@ -212,6 +219,10 @@ export default function Landing() {
         {explore === "3d" ? (
           <Suspense fallback={<p className={styles.exploreLoading}>Loading the 3D neighbourhood…</p>}>
             <Neighbourhood3D />
+          </Suspense>
+        ) : explore === "solar" ? (
+          <Suspense fallback={<p className={styles.exploreLoading}>Loading the Solar System…</p>}>
+            <SolarSystem3D />
           </Suspense>
         ) : (
           <SkyMap
