@@ -20,6 +20,9 @@ interface PlayerProps {
   catalogError: string | null;
   movers: MoverCandidate[];
   selectedMover: string | null;
+  colourImages?: Record<number, string>;
+  colourLoading?: boolean;
+  colourError?: string | null;
 }
 
 function waitingMessage(elapsedMs: number): string {
@@ -42,6 +45,9 @@ export default function Player({
   catalogError,
   movers,
   selectedMover,
+  colourImages,
+  colourLoading = false,
+  colourError = null,
 }: PlayerProps) {
   const [current, setCurrent] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -81,7 +87,14 @@ export default function Player({
   }, [visible.length]);
 
   const grid = frames?.grid;
-  const image = blink ? (shown ? imageUrl(shown.image) : null) : differenceImage ? imageUrl(differenceImage) : null;
+  const colourImage = view.colour && shown ? colourImages?.[shown.index] : undefined;
+  const image = blink
+    ? shown
+      ? imageUrl(colourImage ?? shown.image)
+      : null
+    : differenceImage
+      ? imageUrl(differenceImage)
+      : null;
   const detector = DETECTORS.find((d) => d.id === view.detector) ?? DETECTORS[1];
 
   function pick(event: React.MouseEvent<HTMLDivElement>) {
@@ -105,6 +118,12 @@ export default function Player({
       ? `Pass ${shown.index} · ${shown.start}${shown.start === shown.end ? "" : ` to ${shown.end}`} · ${shown.frames_used} frames`
       : "No pass selected"
     : `Pass ${pair[1]} − pass ${pair[0]}`;
+  const colourNote =
+    blink && view.colour && shown && !colourLoading && !colourError
+      ? colourImage
+        ? " · colour"
+        : " · no colour match for this pass"
+      : "";
 
   return (
     <section aria-label="Image player" className={styles.player}>
@@ -161,7 +180,7 @@ export default function Player({
           onClick={image ? pick : undefined}
           role={image ? "button" : "img"}
           tabIndex={image ? 0 : -1}
-          aria-label={image ? `${frameLabel}. Click a source to read its spectrum.` : frameLabel}
+          aria-label={image ? `${frameLabel + colourNote}. Click a source to read its spectrum.` : frameLabel}
         >
           {image ? (
             <>
@@ -218,7 +237,7 @@ export default function Player({
                   ) : null}
                 </svg>
               ) : null}
-              <span className={`mono ${styles.frameLabel}`}>{frameLabel}</span>
+              <span className={`mono ${styles.frameLabel}`}>{frameLabel + colourNote}</span>
               <span className={`mono ${styles.compass}`} aria-hidden="true">
                 N ↑ E ←
               </span>
@@ -352,8 +371,32 @@ export default function Player({
             <input type="checkbox" checked={view.gaia} onChange={(e) => onChange({ gaia: e.target.checked })} />
             Gaia DR3
           </label>
+          <label className="mono" title="Red: D6, 4.42–5.00 µm · green: D3, 1.63–2.41 µm · blue: D1, 0.75–1.09 µm">
+            <input
+              type="checkbox"
+              checked={view.colour}
+              onChange={(e) => onChange({ colour: e.target.checked, mode: "blink" })}
+            />
+            Colour
+          </label>
         </div>
       </div>
+
+      {view.colour && blink ? (
+        <p className={styles.colourKey}>
+          {colourError ? (
+            `The colour view could not be built: ${colourError}.`
+          ) : colourLoading ? (
+            "Building the colour view from detectors 1, 3 and 6…"
+          ) : (
+            <>
+              <span className={styles.red}>Red</span> 4.4–5.0 µm (D6) · <span className={styles.green}>green</span>{" "}
+              1.6–2.4 µm (D3) · <span className={styles.blue}>blue</span> 0.75–1.1 µm (D1). Cold brown dwarfs glow red; hot
+              stars look blue-white.
+            </>
+          )}
+        </p>
+      ) : null}
 
       {passes.length > 1 ? (
         <p className={styles.passHint}>

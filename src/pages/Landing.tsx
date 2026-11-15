@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import HeroBlink from "../components/HeroBlink.tsx";
 import SearchBox from "../components/SearchBox.tsx";
 import SkyMap from "../components/SkyMap.tsx";
 import { FEATURED_TARGETS, viewLink } from "../data/featuredTargets.ts";
@@ -29,8 +31,9 @@ const STEPS = [
 export default function Landing() {
   const hero = useAsync<FramesResponse>((signal) => fetchFrames(HERO_TARGET, signal), "landing-hero");
   const motion = hero.data?.measurement?.motion ?? null;
+  const [activePass, setActivePass] = useState<number | null>(null);
   const strip = [
-    ...(hero.data?.passes.map((p) => ({ label: `Pass ${p.index} · ${p.mid_date}`, image: p.image })) ?? []),
+    ...(hero.data?.passes.map((p) => ({ label: `Pass ${p.index} · ${p.mid_date}`, image: p.image, pass: p.index })) ?? []),
     ...(hero.data?.difference_image ? [{ label: "Difference", image: hero.data.difference_image }] : []),
   ];
 
@@ -55,9 +58,20 @@ export default function Landing() {
           </a>
         </div>
         <figure className={styles.heroFigure}>
+          <HeroBlink
+            passes={hero.data?.passes ?? []}
+            width={hero.data?.grid.width_px ?? 35}
+            height={hero.data?.grid.height_px ?? 35}
+            name="Barnard's Star"
+            onPass={setActivePass}
+          />
           <div className={styles.strip}>
             {(strip.length ? strip : [1, 2, 3, 4].map((n) => ({ label: "", image: "" , key: n }))).map((item, index) => (
-              <div key={item.label || index} className={styles.stripItem}>
+              <div
+                key={item.label || index}
+                className={styles.stripItem}
+                data-active={"pass" in item && item.pass === activePass}
+              >
                 {item.image ? (
                   <img
                     src={imageUrl(item.image)}
@@ -113,10 +127,10 @@ export default function Landing() {
         <SkyMap
           ra={83.8221}
           dec={-5.3911}
-          viewDeg={1.2}
-          initialSurvey={1}
+          viewDeg={9}
+          initialSurvey={0}
           title="Explore the sky"
-          subtitle="Starting on the Orion Nebula. Amber names come from SIMBAD; drag to move, scroll to zoom."
+          subtitle="Orion in the infrared, as NASA’s WISE saw it. Scroll to zoom into anything, click it, and blink it with SPHEREx. Amber names come from SIMBAD."
         />
       </section>
 

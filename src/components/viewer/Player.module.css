@@ -338,3 +338,25 @@
   font-size: 12px;
   color: var(--text-quiet);
 }
+
+.colourKey {
+  margin: -4px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.red {
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.green {
+  color: #7be08a;
+  font-weight: 600;
+}
+
+.blue {
+  color: #6aa8ff;
+  font-weight: 600;
+}

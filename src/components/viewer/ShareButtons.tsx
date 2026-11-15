@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import type { FramesResponse } from "../../lib/api.ts";
+import { download } from "../../lib/exportData.ts";
 
 type Copied = "link" | "embed" | null;
 
-export default function ShareButtons() {
+export default function ShareButtons({ frames = null }: { frames?: FramesResponse | null }) {
   const [copied, setCopied] = useState<Copied>(null);
 
   useEffect(() => {
@@ -29,12 +31,30 @@ export default function ShareButtons() {
   }
 
   return (
-    <div style={{ display: "flex", gap: 8 }}>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
       <button type="button" className="btn" onClick={() => copy("link")}>
         {copied === "link" ? "Link copied" : "Copy link"}
       </button>
       <button type="button" className="btn" onClick={() => copy("embed")}>
         {copied === "embed" ? "Embed code copied" : "Embed"}
+      </button>
+      <button
+        type="button"
+        className="btn"
+        disabled={!frames}
+        onClick={() => frames && download(frames, "csv")}
+        title="The measurement per pass, with a citation line"
+      >
+        Data CSV
+      </button>
+      <button
+        type="button"
+        className="btn"
+        disabled={!frames}
+        onClick={() => frames && download(frames, "json")}
+        title="The whole view: measurements, every frame used, flags and notes"
+      >
+        JSON
       </button>
       <span className="visually-hidden" aria-live="polite">
         {copied ? "Copied to clipboard" : ""}
