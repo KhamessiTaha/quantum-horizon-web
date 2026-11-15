@@ -473,8 +473,12 @@ export default function Neighbourhood3D() {
                   ? "Ready: its SPHEREx images are indexed, so it opens without waiting on NASA's archive."
                   : "Not indexed yet: opening it asks NASA's archive, which is down at times today, and the first look can take a minute."}
               </p>
-              <Link to={blinkLink(selected, kind)} className="btn btn-primary" onClick={() => window.scrollTo({ top: 0 })}>
-                Blink it with SPHEREx
+              <Link
+                to={blinkLink(selected, kind)}
+                className={isReady(selected) ? "btn btn-primary" : "btn"}
+                onClick={() => window.scrollTo({ top: 0 })}
+              >
+                {isReady(selected) ? "Blink it with SPHEREx" : "Try it · needs NASA's archive"}
               </Link>
             </aside>
           ) : null}

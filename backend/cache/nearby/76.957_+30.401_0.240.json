@@ -1,0 +1,328 @@
+{
+ "ra": 76.957,
+ "dec": 30.401,
+ "radius": 0.24,
+ "objects": [
+  {
+   "name": "V* RW Aur",
+   "display": "RW Aur",
+   "ra": 76.95652603458333,
+   "dec": 30.401438173888888,
+   "kind": "T Tauri Star",
+   "refs": 828
+  },
+  {
+   "name": "V* RW Aur A",
+   "display": "RW Aur A",
+   "ra": 76.95606758838,
+   "dec": 30.401326356130003,
+   "kind": "Orion Variable",
+   "refs": 45
+  },
+  {
+   "name": "V* RW Aur B",
+   "display": "RW Aur B",
+   "ra": 76.95651903038,
+   "dec": 30.40142538337,
+   "kind": "Orion Variable",
+   "refs": 28
+  },
+  {
+   "name": "HD  33004",
+   "display": "HD 33004",
+   "ra": 77.11543036373,
+   "dec": 30.44858227863,
+   "kind": "Star",
+   "refs": 15
+  },
+  {
+   "name": "UCAC4 603-018364",
+   "display": "UCAC4 603-018364",
+   "ra": 77.17722867695,
+   "dec": 30.44923022898,
+   "kind": "Low-mass Star",
+   "refs": 13
+  },
+  {
+   "name": "2MASS J05080636+3026233",
+   "display": "2MASS J05080636+3026233",
+   "ra": 77.02649758553,
+   "dec": 30.43981209820999,
+   "kind": "Low-mass Star",
+   "refs": 12
+  },
+  {
+   "name": "HD  32878",
+   "display": "HD 32878",
+   "ra": 76.8993896246,
+   "dec": 30.62426617719001,
+   "kind": "Star",
+   "refs": 11
+  },
+  {
+   "name": "GALEX J050758.1+301323",
+   "display": "GALEX J050758.1+301323",
+   "ra": 76.99233169931,
+   "dec": 30.223135693780005,
+   "kind": "White Dwarf",
+   "refs": 6
+  },
+  {
+   "name": "ZTF J050726.75+302007.8",
+   "display": "ZTF J050726.75+302007.8",
+   "ra": 76.86146546028499,
+   "dec": 30.335499636396108,
+   "kind": "Eclipsing Binary",
+   "refs": 5
+  },
+  {
+   "name": "ATO J076.9386+30.1903",
+   "display": "ATO J076.9386+30.1903",
+   "ra": 76.93862666977,
+   "dec": 30.19035615901,
+   "kind": "Eclipsing Binary",
+   "refs": 4
+  },
+  {
+   "name": "ATO J076.9113+30.2803",
+   "display": "ATO J076.9113+30.2803",
+   "ra": 76.91132878737832,
+   "dec": 30.280319924401947,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "ZTF J050734.89+302305.2",
+   "display": "ZTF J050734.89+302305.2",
+   "ra": 76.89542245956457,
+   "dec": 30.384755243561113,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "ZTF J050811.75+302320.9",
+   "display": "ZTF J050811.75+302320.9",
+   "ra": 77.04895293829499,
+   "dec": 30.389127798720562,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "ZTF J050809.40+303408.3",
+   "display": "ZTF J050809.40+303408.3",
+   "ra": 77.03918398825627,
+   "dec": 30.568956283643885,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "Gaia DR3 156433158576534528",
+   "display": "Gaia DR3 156433158576534528",
+   "ra": 77.06225700876084,
+   "dec": 30.513595303438056,
+   "kind": "White Dwarf",
+   "refs": 3
+  },
+  {
+   "name": "ZTF J050828.96+301748.5",
+   "display": "ZTF J050828.96+301748.5",
+   "ra": 77.12068104399377,
+   "dec": 30.296817550601393,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "NVSS J050749+301926",
+   "display": "NVSS J050749+301926",
+   "ra": 76.95621,
+   "dec": 30.324159999999996,
+   "kind": "Radio Source",
+   "refs": 3
+  },
+  {
+   "name": "HH 835",
+   "display": "HH 835",
+   "ra": 76.87666666666667,
+   "dec": 30.453055555555554,
+   "kind": "Herbig-Haro Object",
+   "refs": 3
+  },
+  {
+   "name": "ATO J076.8941+30.4541",
+   "display": "ATO J076.8941+30.4541",
+   "ra": 76.89419183975123,
+   "dec": 30.45420978961249,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "HD 240787",
+   "display": "HD 240787",
+   "ra": 76.96783266879,
+   "dec": 30.175212364200004,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "ATO J076.7463+30.4651",
+   "display": "ATO J076.7463+30.4651",
+   "ra": 76.74630384926249,
+   "dec": 30.465128461922507,
+   "kind": "Eclipsing Binary",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050814.72+301507.8",
+   "display": "ZTF J050814.72+301507.8",
+   "ra": 77.06125043319959,
+   "dec": 30.252322671073333,
+   "kind": "BY Dra Variable",
+   "refs": 2
+  },
+  {
+   "name": "Gaia DR3 156431440590447744",
+   "display": "Gaia DR3 156431440590447744",
+   "ra": 76.97691375445291,
+   "dec": 30.455475336360834,
+   "kind": "Star",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050707.15+302143.1",
+   "display": "ZTF J050707.15+302143.1",
+   "ra": 76.7798,
+   "dec": 30.36198,
+   "kind": "BY Dra Variable",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050811.05+301423.2",
+   "display": "ZTF J050811.05+301423.2",
+   "ra": 77.04605,
+   "dec": 30.23977999999999,
+   "kind": "RS CVn Variable",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050814.33+302018.7",
+   "display": "ZTF J050814.33+302018.7",
+   "ra": 77.05972,
+   "dec": 30.33855,
+   "kind": "delta Sct Variable",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050801.72+302240.0",
+   "display": "ZTF J050801.72+302240.0",
+   "ra": 77.00718,
+   "dec": 30.377779999999994,
+   "kind": "BY Dra Variable",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050728.91+303217.1",
+   "display": "ZTF J050728.91+303217.1",
+   "ra": 76.87046,
+   "dec": 30.538100000000004,
+   "kind": "RS CVn Variable",
+   "refs": 2
+  },
+  {
+   "name": "ZTF J050654.16+302557.4",
+   "display": "ZTF J050654.16+302557.4",
+   "ra": 76.72567,
+   "dec": 30.43262,
+   "kind": "Eclipsing Binary",
+   "refs": 2
+  },
+  {
+   "name": "2MASS J05071499+3023365",
+   "display": "2MASS J05071499+3023365",
+   "ra": 76.81244829679,
+   "dec": 30.393530031189997,
+   "kind": "Galaxy",
+   "refs": 2
+  },
+  {
+   "name": "Gaia DR3 156354023804437632",
+   "display": "Gaia DR3 156354023804437632",
+   "ra": 76.71498868439458,
+   "dec": 30.511662207749442,
+   "kind": "Star",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156378801472406400",
+   "display": "Gaia DR3 156378801472406400",
+   "ra": 77.17239553201001,
+   "dec": 30.305814072066394,
+   "kind": "Star",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156432948124498176",
+   "display": "Gaia DR3 156432948124498176",
+   "ra": 77.1070277276246,
+   "dec": 30.53933813159639,
+   "kind": "Star",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156338665001136256",
+   "display": "Gaia DR3 156338665001136256",
+   "ra": 76.69364070549459,
+   "dec": 30.34402449987833,
+   "kind": "Chemically Peculiar Star",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156378281780277376",
+   "display": "Gaia DR3 156378281780277376",
+   "ra": 77.15273111087834,
+   "dec": 30.27020482313666,
+   "kind": "Chemically Peculiar Star",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156436938149677312",
+   "display": "Gaia DR3 156436938149677312",
+   "ra": 77.02648845852544,
+   "dec": 30.582027128825835,
+   "kind": "Chemically Peculiar Star",
+   "refs": 1
+  },
+  {
+   "name": "IRAS 05043+3015",
+   "display": "IRAS 05043+3015",
+   "ra": 76.87823292324447,
+   "dec": 30.317023098279577,
+   "kind": "Far-IR source (\u03bb >= 30 \u00b5m)",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156352889933008256",
+   "display": "Gaia DR3 156352889933008256",
+   "ra": 76.7574701751625,
+   "dec": 30.46139533850361,
+   "kind": "Eclipsing Binary",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156432260929622016",
+   "display": "Gaia DR3 156432260929622016",
+   "ra": 77.05132503634458,
+   "dec": 30.47262061294138,
+   "kind": "Eclipsing Binary",
+   "refs": 1
+  },
+  {
+   "name": "Gaia DR3 156350729563458688",
+   "display": "Gaia DR3 156350729563458688",
+   "ra": 76.67998263951417,
+   "dec": 30.392170023419734,
+   "kind": "Eclipsing Binary",
+   "refs": 1
+  }
+ ],
+ "source": "SIMBAD (simbad.cfa.harvard.edu)"
+}

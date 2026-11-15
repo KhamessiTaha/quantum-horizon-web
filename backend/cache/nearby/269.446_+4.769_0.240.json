@@ -1,0 +1,328 @@
+{
+ "ra": 269.446,
+ "dec": 4.769,
+ "radius": 0.24,
+ "objects": [
+  {
+   "name": "NAME Barnard's star",
+   "display": "Barnard's star",
+   "ra": 269.4520769586187,
+   "dec": 4.693364966576667,
+   "kind": "BY Dra Variable",
+   "refs": 924
+  },
+  {
+   "name": "NAME Barnard's Star b",
+   "display": "Barnard's Star b",
+   "ra": 269.4520769586187,
+   "dec": 4.693364966576667,
+   "kind": "Extra-solar Planet",
+   "refs": 34
+  },
+  {
+   "name": "V* V391 Oph",
+   "display": "V391 Oph",
+   "ra": 269.5380431971,
+   "dec": 4.657670034189999,
+   "kind": "Eclipsing Binary",
+   "refs": 19
+  },
+  {
+   "name": "HD 163697",
+   "display": "HD 163697",
+   "ra": 269.33283208687,
+   "dec": 4.887454856859999,
+   "kind": "Star",
+   "refs": 17
+  },
+  {
+   "name": "V* V2033 Oph",
+   "display": "V2033 Oph",
+   "ra": 269.40757536675,
+   "dec": 4.8545880332,
+   "kind": "RR Lyrae Variable",
+   "refs": 11
+  },
+  {
+   "name": "Z  56-3",
+   "display": "Z 56-3",
+   "ra": 269.44534642609,
+   "dec": 4.617955032780001,
+   "kind": "Galaxy",
+   "refs": 10
+  },
+  {
+   "name": "BD+04  3559",
+   "display": "BD+04 3559",
+   "ra": 269.35172662865,
+   "dec": 4.6025537862000006,
+   "kind": "Star",
+   "refs": 8
+  },
+  {
+   "name": "TYC  425-262-1",
+   "display": "TYC 425-262-1",
+   "ra": 269.4664581074621,
+   "dec": 4.705611349569168,
+   "kind": "Spectroscopic Binary",
+   "refs": 8
+  },
+  {
+   "name": "TYC  425-1389-1",
+   "display": "TYC 425-1389-1",
+   "ra": 269.66704028929996,
+   "dec": 4.77320090468,
+   "kind": "Star",
+   "refs": 8
+  },
+  {
+   "name": "ZTF J175755.00+045005.8",
+   "display": "ZTF J175755.00+045005.8",
+   "ra": 269.47918407537,
+   "dec": 4.834920968189999,
+   "kind": "RR Lyrae Variable",
+   "refs": 6
+  },
+  {
+   "name": "Gaia DR3 4472811003990563584",
+   "display": "Gaia DR3 4472811003990563584",
+   "ra": 269.22339963639325,
+   "dec": 4.684341225932223,
+   "kind": "Emission-line Star",
+   "refs": 5
+  },
+  {
+   "name": "V* V3214 Oph",
+   "display": "V3214 Oph",
+   "ra": 269.41889580741,
+   "dec": 4.84760980136,
+   "kind": "Eclipsing Binary",
+   "refs": 5
+  },
+  {
+   "name": "TYC  425-1810-1",
+   "display": "TYC 425-1810-1",
+   "ra": 269.59001940352994,
+   "dec": 4.60276772757,
+   "kind": "Star",
+   "refs": 5
+  },
+  {
+   "name": "Gaia DR2 4472819422127132928",
+   "display": "Gaia DR2 4472819422127132928",
+   "ra": 269.54471032069995,
+   "dec": 4.647657044389999,
+   "kind": "Star",
+   "refs": 5
+  },
+  {
+   "name": "V* V3215 Oph",
+   "display": "V3215 Oph",
+   "ra": 269.42636781366,
+   "dec": 4.6521865157199995,
+   "kind": "Eclipsing Binary",
+   "refs": 4
+  },
+  {
+   "name": "Gaia DR3 4472821552430487552",
+   "display": "Gaia DR3 4472821552430487552",
+   "ra": 269.64770313583705,
+   "dec": 4.706420290706389,
+   "kind": "Star",
+   "refs": 4
+  },
+  {
+   "name": "ZTF J175830.92+044456.6",
+   "display": "ZTF J175830.92+044456.6",
+   "ra": 269.628883938082,
+   "dec": 4.749048813789167,
+   "kind": "RR Lyrae Variable",
+   "refs": 4
+  },
+  {
+   "name": "TYC  425-1535-1",
+   "display": "TYC 425-1535-1",
+   "ra": 269.48914213593,
+   "dec": 4.533657301009999,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "ATO J269.3920+04.7625",
+   "display": "ATO J269.3920+04.7625",
+   "ra": 269.3920595325521,
+   "dec": 4.7625682368372235,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "ATO J269.3809+04.8896",
+   "display": "ATO J269.3809+04.8896",
+   "ra": 269.3809626310191,
+   "dec": 4.889683758759445,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "NAME Barnard's Star c",
+   "display": "Barnard's Star c",
+   "ra": 269.4520769586187,
+   "dec": 4.693364966576667,
+   "kind": "Extra-solar Planet",
+   "refs": 3
+  },
+  {
+   "name": "NAME Barnard's Star e",
+   "display": "Barnard's Star e",
+   "ra": 269.4520769586187,
+   "dec": 4.693364966576667,
+   "kind": "Extra-solar Planet",
+   "refs": 3
+  },
+  {
+   "name": "NAME Barnard's Star d",
+   "display": "Barnard's Star d",
+   "ra": 269.4520769586187,
+   "dec": 4.693364966576667,
+   "kind": "Extra-solar Planet",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 473-069608",
+   "display": "UCAC4 473-069608",
+   "ra": 269.41674229785826,
+   "dec": 4.533423044880277,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 474-068317",
+   "display": "UCAC4 474-068317",
+   "ra": 269.56778349949536,
+   "dec": 4.688752656278055,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 475-070166",
+   "display": "UCAC4 475-070166",
+   "ra": 269.56435034337494,
+   "dec": 4.89733398547111,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 474-068399",
+   "display": "UCAC4 474-068399",
+   "ra": 269.6598435064812,
+   "dec": 4.740996534141945,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 474-068311",
+   "display": "UCAC4 474-068311",
+   "ra": 269.5592720965191,
+   "dec": 4.6295223648174995,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 475-070249",
+   "display": "UCAC4 475-070249",
+   "ra": 269.6464613250083,
+   "dec": 4.874088839772501,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 475-070255",
+   "display": "UCAC4 475-070255",
+   "ra": 269.6514548628583,
+   "dec": 4.852141915830556,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 473-069661",
+   "display": "UCAC4 473-069661",
+   "ra": 269.46945612251915,
+   "dec": 4.555642162378889,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "UCAC4 474-068265",
+   "display": "UCAC4 474-068265",
+   "ra": 269.5106652984699,
+   "dec": 4.699149703674722,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "ATO J269.4503+04.6121",
+   "display": "ATO J269.4503+04.6121",
+   "ra": 269.4503574902883,
+   "dec": 4.612158327185,
+   "kind": "Eclipsing Binary",
+   "refs": 3
+  },
+  {
+   "name": "[SHM2017] J269.45533+04.60506",
+   "display": "[SHM2017] J269.45533+04.60506",
+   "ra": 269.45533638788,
+   "dec": 4.605044199539999,
+   "kind": "RR Lyrae Variable",
+   "refs": 3
+  },
+  {
+   "name": "GES J17574778+0443542",
+   "display": "GES J17574778+0443542",
+   "ra": 269.4490799999999,
+   "dec": 4.731720000000001,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "Gaia DR3 4472795061071896448",
+   "display": "Gaia DR3 4472795061071896448",
+   "ra": 269.4479691213875,
+   "dec": 4.574103406357778,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "GAT  771",
+   "display": "GAT 771",
+   "ra": 269.44389907959,
+   "dec": 4.79628913665,
+   "kind": "Star",
+   "refs": 3
+  },
+  {
+   "name": "Gaia DR3 4472840583427488768",
+   "display": "Gaia DR3 4472840583427488768",
+   "ra": 269.66738155884,
+   "dec": 4.854992353000002,
+   "kind": "White Dwarf Candidate",
+   "refs": 3
+  },
+  {
+   "name": "Gaia DR3 4472837804589123072",
+   "display": "Gaia DR3 4472837804589123072",
+   "ra": 269.46758888335,
+   "dec": 4.82033568746,
+   "kind": "White Dwarf Candidate",
+   "refs": 3
+  },
+  {
+   "name": "2MASS J17580210+0448215",
+   "display": "2MASS J17580210+0448215",
+   "ra": 269.50874850397,
+   "dec": 4.805920515069999,
+   "kind": "Hot Subdwarf",
+   "refs": 3
+  }
+ ],
+ "source": "SIMBAD (simbad.cfa.harvard.edu)"
+}
