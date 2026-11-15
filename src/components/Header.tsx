@@ -27,6 +27,9 @@ export default function Header() {
         {inViewer ? (
           <div className={styles.search}>
             <SearchBox compact key={queryKey} />
+            <Link to="/explore" className={styles.methodsLink}>
+              3D
+            </Link>
             <Link to="/methods" className={styles.methodsLink}>
               Methods
             </Link>
@@ -35,7 +38,8 @@ export default function Header() {
           <nav aria-label="Main" className={styles.nav}>
             <Link to="/#targets">Challenge targets</Link>
             <Link to="/#neighbours">Neighbours</Link>
-            <Link to="/?explore=3d#sky">3D and sky map</Link>
+            <Link to="/explore">Explore in 3D</Link>
+            <Link to="/?explore=sky#sky">Sky map</Link>
             <Link to="/#how">How it works</Link>
             <Link to="/methods">Methods and limits</Link>
           </nav>

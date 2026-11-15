@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { PlanetKey } from "../lib/orbits.ts";
 import type { Kind } from "../lib/stellar.ts";
 import styles from "./Body3D.module.css";
@@ -219,11 +220,13 @@ export default function Body3D({
   id,
   className,
   caption = true,
+  interactive = false,
 }: {
   kind: BodyKind;
   id: string;
   className?: string;
   caption?: boolean;
+  interactive?: boolean;
 }) {
   const holder = useRef<HTMLDivElement>(null);
 
@@ -298,6 +301,14 @@ export default function Body3D({
       tilt.add(ring);
     }
 
+    const controls = interactive ? new OrbitControls(camera, renderer.domElement) : null;
+    if (controls) {
+      controls.enableDamping = true;
+      controls.enablePan = false;
+      controls.minDistance = 1.8;
+      controls.maxDistance = 9;
+    }
+
     const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
     const clock = new THREE.Clock();
     const animation = { frame: 0, visible: true };
@@ -310,6 +321,7 @@ export default function Body3D({
         body.rotation.y = t * (look.mode === LUMPY ? 0.35 : 0.18);
         if (look.mode === LUMPY) body.rotation.x = t * 0.11;
       }
+      controls?.update();
       renderer.render(scene, camera);
     };
     loop();
@@ -328,6 +340,7 @@ export default function Body3D({
 
     return () => {
       cancelAnimationFrame(animation.frame);
+      controls?.dispose();
       resize.disconnect();
       seen.disconnect();
       scene.traverse((object) => {
@@ -338,7 +351,7 @@ export default function Body3D({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [kind, id]);
+  }, [kind, id, interactive]);
 
   return (
     <figure className={styles.figure}>

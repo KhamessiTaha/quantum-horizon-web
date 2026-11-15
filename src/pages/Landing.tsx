@@ -1,5 +1,6 @@
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import FullscreenFrame from "../components/FullscreenFrame.tsx";
 import HeroBlink from "../components/HeroBlink.tsx";
 import HeroSky from "../components/HeroSky.tsx";
 import SearchBox from "../components/SearchBox.tsx";
@@ -215,15 +216,22 @@ export default function Landing() {
           <button type="button" role="tab" className="btn toggle" aria-selected={explore === "sky"} onClick={() => setExplore("sky")}>
             Sky map
           </button>
+          <Link to="/explore" className={styles.exploreMore}>
+            All 3D views and models on their own page →
+          </Link>
         </div>
-        {explore === "3d" ? (
-          <Suspense fallback={<p className={styles.exploreLoading}>Loading the 3D neighbourhood…</p>}>
-            <Neighbourhood3D />
-          </Suspense>
-        ) : explore === "solar" ? (
-          <Suspense fallback={<p className={styles.exploreLoading}>Loading the Solar System…</p>}>
-            <SolarSystem3D />
-          </Suspense>
+        {explore === "3d" || explore === "solar" ? (
+          <FullscreenFrame key={explore} label={explore === "3d" ? "the 3D neighbourhood" : "the Solar System"}>
+            {(full) => (
+              <Suspense fallback={<p className={styles.exploreLoading}>Loading the 3D view…</p>}>
+                {explore === "3d" ? (
+                  <Neighbourhood3D height={full ? "calc(100vh - 90px)" : undefined} />
+                ) : (
+                  <SolarSystem3D height={full ? "calc(100vh - 90px)" : undefined} />
+                )}
+              </Suspense>
+            )}
+          </FullscreenFrame>
         ) : (
           <SkyMap
           ra={83.8221}

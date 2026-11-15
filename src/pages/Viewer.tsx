@@ -156,7 +156,7 @@ export default function Viewer() {
             </Link>
           ))}
         </div>
-        <Link to="/?explore=3d#sky" className={styles.explore}>
+        <Link to="/explore" className={styles.explore}>
           {NEIGHBOUR_LIST.length} neighbours in 3D →
         </Link>
       </nav>

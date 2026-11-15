@@ -114,7 +114,7 @@ interface SceneApi {
 
 /** The Sun's neighbourhood, built from SIMBAD: positions from parallaxes, colours from spectral types, sizes from
  * catalog magnitudes, and a backdrop of the real naked-eye sky coloured by each star's B−V. */
-export default function Neighbourhood3D() {
+export default function Neighbourhood3D({ height }: { height?: string } = {}) {
   const holder = useRef<HTMLDivElement>(null);
   const api = useRef<SceneApi | null>(null);
   const [error] = useState<string | null>(() => (webglAvailable() ? null : "This browser cannot draw 3D graphics."));
@@ -423,7 +423,7 @@ export default function Neighbourhood3D() {
     <div className={styles.wrap}>
       <div className={styles.layout}>
         <div className={styles.stageWrap}>
-          {error ? <p className={styles.error}>{error}</p> : <div ref={holder} className={styles.stage} />}
+          {error ? <p className={styles.error}>{error}</p> : <div ref={holder} className={styles.stage} style={height ? { height } : undefined} />}
           {selected && kind ? (
             <aside className={styles.card} aria-live="polite">
               <button type="button" className={styles.close} onClick={() => setSelected(null)} aria-label="Close">
@@ -479,7 +479,7 @@ export default function Neighbourhood3D() {
             Motion over 10,000 years
           </label>
         </div>
-        <div className={styles.side}>
+        <div className={styles.side} style={height ? { maxHeight: height } : undefined}>
           <input
             className={`mono ${styles.search}`}
             type="search"

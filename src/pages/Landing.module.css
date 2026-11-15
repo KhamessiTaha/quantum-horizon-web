@@ -256,6 +256,7 @@
 
 .exploreTabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -351,4 +352,12 @@
 .diffKey i[data-tone="now"] {
   margin-left: 6px;
   background: var(--predicted);
+}
+
+.exploreMore {
+  align-self: center;
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
 }

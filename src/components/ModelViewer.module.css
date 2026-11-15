@@ -1,0 +1,115 @@
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.stageWrap {
+  position: relative;
+  flex: 999 1 560px;
+  min-width: 0;
+}
+
+.stage {
+  height: min(70vh, 640px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: grab;
+}
+
+.stageFull {
+  height: calc(100vh - 90px);
+}
+
+.info {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: rgba(10, 12, 15, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.name {
+  font-size: 18px;
+}
+
+.detail {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--predicted);
+}
+
+.picker {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-quiet);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 5px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  color: var(--text);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .stage {
+    height: 380px;
+  }
+
+  .info {
+    position: static;
+    max-width: none;
+    margin-top: 10px;
+  }
+}

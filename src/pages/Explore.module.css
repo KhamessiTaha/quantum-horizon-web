@@ -1,0 +1,33 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block: 28px 48px;
+}
+
+.head h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.head p {
+  margin: 6px 0 0;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.loading {
+  margin: 0;
+  padding: 40px 0;
+  color: var(--text-muted);
+}

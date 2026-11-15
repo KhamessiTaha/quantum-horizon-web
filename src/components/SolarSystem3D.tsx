@@ -173,7 +173,7 @@ interface SceneApi {
 
 /** The Solar System on a compressed distance scale: the eight planets from JPL's mean elements, and 7,500 real
  * asteroids, comets and distant objects from JPL's Small-Body Database, each moved along its own orbit. */
-export default function SolarSystem3D() {
+export default function SolarSystem3D({ height }: { height?: string } = {}) {
   const holder = useRef<HTMLDivElement>(null);
   const api = useRef<SceneApi | null>(null);
   const [error] = useState<string | null>(() => (webglAvailable() ? null : "This browser cannot draw 3D graphics."));
@@ -582,7 +582,7 @@ export default function SolarSystem3D() {
     <div className={styles.wrap}>
       <div className={styles.layout}>
         <div className={styles.stageWrap}>
-          <div ref={holder} className={styles.stage} />
+          <div ref={holder} className={styles.stage} style={height ? { height } : undefined} />
           <div className={styles.timeDock}>
             <button type="button" className={styles.play} onClick={() => setPlaying((p) => !p)} aria-label={playing ? "Pause time" : "Play time"}>
               {playing ? "❚❚" : "▶"}
@@ -602,7 +602,7 @@ export default function SolarSystem3D() {
           </button>
           {selected ? <BodyCard selection={selected} jd={jd} onClose={() => setSelected(null)} /> : null}
         </div>
-        <aside className={styles.side}>
+        <aside className={styles.side} style={height ? { maxHeight: height } : undefined}>
           <input
             className={styles.search}
             type="search"
