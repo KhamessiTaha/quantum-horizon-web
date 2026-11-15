@@ -1,0 +1,13 @@
+{
+ "query": "R Coronae Borealis",
+ "name": "V* R CrB",
+ "simbad_id": "V* R CrB",
+ "ra": 237.14339784473003,
+ "dec": 28.1567488479,
+ "pmra": -2.898,
+ "pmdec": -11.703,
+ "parallax": 1.4366,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

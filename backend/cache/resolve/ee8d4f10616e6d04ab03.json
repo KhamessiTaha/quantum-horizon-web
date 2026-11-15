@@ -1,0 +1,13 @@
+{
+ "query": "SCR J1845-6357",
+ "name": "SCR J1845-6357",
+ "simbad_id": "SCR J1845-6357",
+ "ra": 281.27188853878334,
+ "dec": -63.96318058599389,
+ "pmra": 2583.19,
+ "pmdec": 588.504,
+ "parallax": 249.6651,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

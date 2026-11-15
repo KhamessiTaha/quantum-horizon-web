@@ -1,0 +1,13 @@
+{
+ "query": "SIMP J013656.5+093347.3",
+ "name": "SIMP J013656.5+093347.3",
+ "simbad_id": "SIMP J013656.5+093347.3",
+ "ra": 24.23566892492917,
+ "dec": 9.563142212769169,
+ "pmra": 1238.244,
+ "pmdec": -16.156,
+ "parallax": 163.4478,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

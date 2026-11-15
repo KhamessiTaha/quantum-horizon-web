@@ -1,0 +1,13 @@
+{
+ "query": "LP  914-54",
+ "name": "LP  914-54",
+ "simbad_id": "LP  914-54",
+ "ra": 224.15943113148623,
+ "dec": -28.163505320412494,
+ "pmra": -490.285,
+ "pmdec": -843.482,
+ "parallax": 141.7891,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

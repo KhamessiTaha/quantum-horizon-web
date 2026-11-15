@@ -1,0 +1,13 @@
+{
+ "query": "Gaia DR3 6305165514134625024",
+ "name": "Gaia DR3 6305165514134625024",
+ "simbad_id": "Gaia DR3 6305165514134625024",
+ "ra": 224.9766109720996,
+ "dec": -18.53771255437806,
+ "pmra": 8.936,
+ "pmdec": -9.868,
+ "parallax": 174.0253,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

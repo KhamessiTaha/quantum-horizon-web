@@ -1,0 +1,13 @@
+{
+ "query": "UCAC4 195-119117",
+ "name": "UCAC4 195-119117",
+ "simbad_id": "UCAC4 195-119117",
+ "ra": 235.18140187997787,
+ "dec": -51.026656989971386,
+ "pmra": 1949.461,
+ "pmdec": -324.789,
+ "parallax": 187.729,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

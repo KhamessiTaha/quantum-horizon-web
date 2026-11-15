@@ -1,0 +1,13 @@
+{
+ "query": "LSR J1835+3259",
+ "name": "LSR J1835+3259",
+ "simbad_id": "LSR J1835+3259",
+ "ra": 278.90783384444705,
+ "dec": 32.99814336087223,
+ "pmra": -72.65,
+ "pmdec": -755.146,
+ "parallax": 175.793,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

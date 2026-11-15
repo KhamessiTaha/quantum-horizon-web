@@ -1,0 +1,13 @@
+{
+ "query": "G 208-44",
+ "name": "G 208-44",
+ "simbad_id": "G 208-44",
+ "ra": 298.4770088165204,
+ "dec": 44.41426154563861,
+ "pmra": 441.562,
+ "pmdec": -434.241,
+ "parallax": 213.1329,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

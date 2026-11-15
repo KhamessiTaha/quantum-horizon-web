@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { imageUrl, type PassInfo } from "../lib/api.ts";
 import styles from "./HeroBlink.module.css";
 
-const ZOOM = 2;
+const ZOOM = 1.35;
 const STEP_MS = 850;
 
 function reducedMotion(): boolean {

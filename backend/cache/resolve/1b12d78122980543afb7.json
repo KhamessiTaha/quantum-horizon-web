@@ -1,0 +1,13 @@
+{
+ "query": "HD 152751C",
+ "name": "HD 152751C",
+ "simbad_id": "HD 152751C",
+ "ra": 253.85509268901828,
+ "dec": -8.322582491435277,
+ "pmra": -817.58,
+ "pmdec": -898.595,
+ "parallax": 153.8754,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

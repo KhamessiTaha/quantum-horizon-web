@@ -1,0 +1,13 @@
+{
+ "query": "2MASSI J0937347+293142",
+ "name": "2MASSI J0937347+293142",
+ "simbad_id": "2MASSI J0937347+293142",
+ "ra": 144.395332,
+ "dec": 29.528053,
+ "pmra": 973.0,
+ "pmdec": -1298.0,
+ "parallax": 163.39,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

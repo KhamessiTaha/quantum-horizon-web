@@ -1,0 +1,13 @@
+{
+ "query": "WISE J041022.71+150248.4",
+ "name": "WISE J041022.71+150248.4",
+ "simbad_id": "WISE J041022.71+150248.4",
+ "ra": 62.59198383333333,
+ "dec": 15.053051111111111,
+ "pmra": 960.3,
+ "pmdec": -2219.4,
+ "parallax": 151.3,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

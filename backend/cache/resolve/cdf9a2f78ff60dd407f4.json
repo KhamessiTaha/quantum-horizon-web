@@ -1,0 +1,13 @@
+{
+ "query": "HD  42581B",
+ "name": "HD  42581B",
+ "simbad_id": "HD  42581B",
+ "ra": 92.645,
+ "dec": -21.866666666666667,
+ "pmra": -137.0,
+ "pmdec": -714.1,
+ "parallax": 173.19,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

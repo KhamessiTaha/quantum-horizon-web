@@ -1,0 +1,13 @@
+{
+ "query": "V* GL Vir",
+ "name": "V* GL Vir",
+ "simbad_id": "V* GL Vir",
+ "ra": 184.74749886977372,
+ "dec": 11.126048121199167,
+ "pmra": -1269.771,
+ "pmdec": 203.444,
+ "parallax": 154.6999,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

@@ -1,0 +1,13 @@
+{
+ "query": "*  36 Oph B",
+ "name": "*  36 Oph B",
+ "simbad_id": "*  36 Oph B",
+ "ra": 258.83743260923,
+ "dec": -26.602825956905555,
+ "pmra": -465.861,
+ "pmdec": -1141.168,
+ "parallax": 168.1303,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

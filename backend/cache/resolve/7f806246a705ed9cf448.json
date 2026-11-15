@@ -1,0 +1,13 @@
+{
+ "query": "DENIS J104814.6-395606",
+ "name": "DENIS J104814.6-395606",
+ "simbad_id": "DENIS J104814.6-395606",
+ "ra": 162.06072337671375,
+ "dec": -39.9352340955186,
+ "pmra": -1179.311,
+ "pmdec": -988.121,
+ "parallax": 247.2156,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

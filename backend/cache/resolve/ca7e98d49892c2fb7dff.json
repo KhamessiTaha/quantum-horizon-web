@@ -1,0 +1,13 @@
+{
+ "query": "HD 131977",
+ "name": "HD 131977",
+ "simbad_id": "HD 131977",
+ "ra": 224.36666996615494,
+ "dec": -21.41547979591945,
+ "pmra": 1031.472,
+ "pmdec": -1723.619,
+ "parallax": 169.8843,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

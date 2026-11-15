@@ -1,0 +1,13 @@
+{
+ "query": "Orion Nebula",
+ "name": "M  42",
+ "simbad_id": "M  42",
+ "ra": 83.8201,
+ "dec": -5.3876,
+ "pmra": 1.67,
+ "pmdec": -0.3,
+ "parallax": null,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

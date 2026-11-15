@@ -1,0 +1,13 @@
+{
+ "query": "HD  79211",
+ "name": "HD  79211",
+ "simbad_id": "HD  79211",
+ "ra": 138.60284519441623,
+ "dec": 52.686361797752774,
+ "pmra": -1573.04,
+ "pmdec": -659.906,
+ "parallax": 157.8825,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

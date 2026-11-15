@@ -1,0 +1,13 @@
+{
+ "query": "G 272-61A",
+ "name": "G 272-61A",
+ "simbad_id": "G 272-61A",
+ "ra": 24.75573856713083,
+ "dec": -17.950718742164163,
+ "pmra": 3385.316,
+ "pmdec": 544.386,
+ "parallax": 367.7119,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

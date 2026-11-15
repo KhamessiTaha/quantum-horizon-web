@@ -1,0 +1,13 @@
+{
+ "query": "LP  368-128",
+ "name": "LP  368-128",
+ "simbad_id": "LP  368-128",
+ "ra": 135.09810882668793,
+ "dec": 21.834694814169445,
+ "pmra": -514.942,
+ "pmdec": -592.253,
+ "parallax": 157.2686,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

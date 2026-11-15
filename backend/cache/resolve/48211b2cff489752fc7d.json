@@ -1,0 +1,13 @@
+{
+ "query": "Ring Nebula",
+ "name": "M  57",
+ "simbad_id": "M  57",
+ "ra": 283.39623652463,
+ "dec": 33.029134246539996,
+ "pmra": 1.645,
+ "pmdec": 2.472,
+ "parallax": 1.2696,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

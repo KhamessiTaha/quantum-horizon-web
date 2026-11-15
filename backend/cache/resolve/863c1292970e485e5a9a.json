@@ -1,0 +1,13 @@
+{
+ "query": "V* AX Mic",
+ "name": "V* AX Mic",
+ "simbad_id": "V* AX Mic",
+ "ra": 319.3136211170721,
+ "dec": -38.86736220516139,
+ "pmra": -3258.966,
+ "pmdec": -1145.862,
+ "parallax": 251.9124,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

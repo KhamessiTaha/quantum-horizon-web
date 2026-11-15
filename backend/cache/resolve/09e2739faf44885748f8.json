@@ -1,0 +1,13 @@
+{
+ "query": "Wolf  424 A",
+ "name": "Wolf  424 A",
+ "simbad_id": "Wolf  424 A",
+ "ra": 188.32257346994038,
+ "dec": 9.021123587424446,
+ "pmra": -1795.661,
+ "pmdec": 217.789,
+ "parallax": 231.1185,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

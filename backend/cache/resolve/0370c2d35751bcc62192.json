@@ -1,0 +1,13 @@
+{
+ "query": "G  99-49",
+ "name": "G  99-49",
+ "simbad_id": "G  99-49",
+ "ra": 90.0146009238775,
+ "dec": 2.706553494371112,
+ "pmra": 309.146,
+ "pmdec": -40.368,
+ "parallax": 192.0135,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

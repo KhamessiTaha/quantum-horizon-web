@@ -1,0 +1,13 @@
+{
+ "query": "G 175-34",
+ "name": "G 175-34",
+ "simbad_id": "G 175-34",
+ "ra": 67.79797678916874,
+ "dec": 58.97707329124862,
+ "pmra": 1300.365,
+ "pmdec": -2046.106,
+ "parallax": 181.2438,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

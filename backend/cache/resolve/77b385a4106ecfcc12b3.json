@@ -1,0 +1,13 @@
+{
+ "query": "* ksi Boo A",
+ "name": "* ksi Boo A",
+ "simbad_id": "* ksi Boo A",
+ "ra": 222.84745194146,
+ "dec": 19.10044994484,
+ "pmra": 127.468,
+ "pmdec": -40.569,
+ "parallax": 148.0695,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

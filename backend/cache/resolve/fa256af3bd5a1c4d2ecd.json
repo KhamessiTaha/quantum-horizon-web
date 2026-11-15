@@ -1,0 +1,13 @@
+{
+ "query": "Wolf 359",
+ "name": "Wolf  359",
+ "simbad_id": "Wolf  359",
+ "ra": 164.1205036259475,
+ "dec": 7.014723134801666,
+ "pmra": -3866.338,
+ "pmdec": -2699.215,
+ "parallax": 415.1794,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

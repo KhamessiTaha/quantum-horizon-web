@@ -1,0 +1,13 @@
+{
+ "query": "HD 217987",
+ "name": "HD 217987",
+ "simbad_id": "HD 217987",
+ "ra": 346.4668157737879,
+ "dec": -35.85307088473306,
+ "pmra": 6765.995,
+ "pmdec": 1330.285,
+ "parallax": 304.1354,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

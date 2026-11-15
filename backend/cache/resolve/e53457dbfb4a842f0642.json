@@ -1,0 +1,13 @@
+{
+ "query": "UV Ceti",
+ "name": "G 272-61B",
+ "simbad_id": "G 272-61B",
+ "ra": 24.756823827312502,
+ "dec": -17.950278122424443,
+ "pmra": 3178.694,
+ "pmdec": 584.061,
+ "parallax": 373.8443,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

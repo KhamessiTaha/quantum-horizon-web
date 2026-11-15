@@ -1,0 +1,13 @@
+{
+ "query": "* eta Cas B",
+ "name": "* eta Cas B",
+ "simbad_id": "* eta Cas B",
+ "ra": 12.271632750996249,
+ "dec": 57.81782624126639,
+ "pmra": 1144.693,
+ "pmdec": -469.668,
+ "parallax": 168.7186,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

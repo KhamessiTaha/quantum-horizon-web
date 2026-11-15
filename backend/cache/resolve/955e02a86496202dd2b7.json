@@ -1,0 +1,13 @@
+{
+ "query": "Gliese 570 D",
+ "name": "GJ 570 D",
+ "simbad_id": "GJ 570 D",
+ "ra": 224.312344,
+ "dec": -21.363264,
+ "pmra": 1038.08,
+ "pmdec": -1677.69,
+ "parallax": 169.3,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

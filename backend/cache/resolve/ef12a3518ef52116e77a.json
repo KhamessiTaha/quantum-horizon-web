@@ -1,0 +1,13 @@
+{
+ "query": "V* V2215 Oph",
+ "name": "V* V2215 Oph",
+ "simbad_id": "V* V2215 Oph",
+ "ra": 259.0556767257492,
+ "dec": -26.54614904538722,
+ "pmra": -479.573,
+ "pmdec": -1124.332,
+ "parallax": 167.9617,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

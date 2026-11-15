@@ -1,0 +1,13 @@
+{
+ "query": "Ross 154",
+ "name": "CD-23 14742",
+ "simbad_id": "CD-23 14742",
+ "ra": 282.45568240083537,
+ "dec": -23.83623538204166,
+ "pmra": 639.368,
+ "pmdec": -193.958,
+ "parallax": 336.0266,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

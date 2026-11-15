@@ -97,6 +97,7 @@
 
 .motionToggle {
   position: absolute;
+  z-index: 2;
   left: 14px;
   bottom: 14px;
   display: inline-flex;
@@ -112,6 +113,7 @@
 
 .card {
   position: absolute;
+  z-index: 2;
   top: 14px;
   right: 14px;
   width: 270px;
@@ -299,4 +301,24 @@
   .side {
     max-height: 360px;
   }
+}
+
+.readiness {
+  margin: 0 0 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.readiness[data-ready="true"] {
+  color: var(--measured);
+}
+
+.readyTag {
+  flex: none;
+  padding: 1px 6px;
+  border: 1px solid var(--measured);
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--measured);
 }

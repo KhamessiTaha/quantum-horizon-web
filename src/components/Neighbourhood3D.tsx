@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
+import Body3D from "./Body3D.tsx";
 import BRIGHT from "../data/brightstars.json";
 import NEIGHBOURS from "../data/neighbourhood.json";
+import READY from "../data/ready.json";
 import {
   colourFromBV,
   displaySize,
@@ -25,10 +27,21 @@ const MOTION_YEARS = 10000;
 const RINGS_PC = [2, 4, 6, 8];
 const FLY_MS = 1300;
 
-type Filter = "all" | "targets" | "brown" | "red" | "bright" | "planets";
+type Filter = "all" | "ready" | "targets" | "brown" | "red" | "bright" | "planets";
+
+const READY_SET = new Set(READY as string[]);
+
+function blinkQuery(star: Neighbour): string {
+  return star.target ? star.name : star.id;
+}
+
+function isReady(star: Neighbour): boolean {
+  return READY_SET.has(blinkQuery(star));
+}
 
 const FILTERS: { id: Filter; label: string; keep: (star: Neighbour, kind: Kind) => boolean }[] = [
   { id: "all", label: "All", keep: () => true },
+  { id: "ready", label: "Ready to blink", keep: (s) => isReady(s) },
   { id: "targets", label: "Challenge targets", keep: (s) => !!s.target },
   { id: "brown", label: "Brown dwarfs", keep: (_, k) => isBrownDwarf(k) },
   { id: "red", label: "Red dwarfs", keep: (_, k) => k === "M" },
@@ -96,7 +109,7 @@ function reducedMotion(): boolean {
 }
 
 function blinkLink(star: Neighbour, kind: Kind): string {
-  const target = star.target ? star.name : star.id;
+  const target = blinkQuery(star);
   const detector = star.name === "WISE 0855-0714" ? "D6" : isBrownDwarf(kind) ? "D5" : "D2";
   return `/view?${new URLSearchParams({ target, det: detector, fov: "0.06", mode: "blink" }).toString()}`;
 }
@@ -430,6 +443,7 @@ export default function Neighbourhood3D() {
               </span>
               <strong className={styles.title}>{selected.name}</strong>
               <span className={`mono ${styles.id}`}>{selected.id}</span>
+              <Body3D kind={kind} id={selected.id} />
               <dl className={styles.facts}>
                 <div>
                   <dt>Distance</dt>
@@ -454,6 +468,11 @@ export default function Neighbourhood3D() {
                   </div>
                 ) : null}
               </dl>
+              <p className={styles.readiness} data-ready={isReady(selected)}>
+                {isReady(selected)
+                  ? "Ready: its SPHEREx images are indexed, so it opens without waiting on NASA's archive."
+                  : "Not indexed yet: opening it asks NASA's archive, which is down at times today, and the first look can take a minute."}
+              </p>
               <Link to={blinkLink(selected, kind)} className="btn btn-primary" onClick={() => window.scrollTo({ top: 0 })}>
                 Blink it with SPHEREx
               </Link>
@@ -488,6 +507,7 @@ export default function Neighbourhood3D() {
                   <button type="button" className={styles.item} aria-pressed={selected?.id === star.id} onClick={() => choose(star)}>
                     <i style={{ background: KIND_COLOUR[k] }} />
                     <span className={styles.itemName}>{star.name}</span>
+                    {isReady(star) ? <span className={styles.readyTag}>ready</span> : null}
                     <span className={`mono ${styles.itemMeta}`}>{(star.d * LIGHT_YEARS_PER_PC).toFixed(1)} ly</span>
                   </button>
                 </li>

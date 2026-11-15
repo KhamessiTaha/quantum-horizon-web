@@ -1,0 +1,13 @@
+{
+ "query": "Ross  775",
+ "name": "Ross  775",
+ "simbad_id": "Ross  775",
+ "ra": 322.4033832271551,
+ "dec": 17.643295969293057,
+ "pmra": 1007.04,
+ "pmdec": 378.4,
+ "parallax": 147.4958,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

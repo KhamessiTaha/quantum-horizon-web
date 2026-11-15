@@ -1,5 +1,6 @@
 import { useId, useMemo, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import READY from "../data/ready.json";
 import { matchSuggestions, type Suggestion } from "../data/suggestions.ts";
 import { FOV_LIMITS, parseCoordinates, parseQuery, parseViewState, toSearchParams, type DetectorId } from "../lib/viewState.ts";
 import styles from "./SearchBox.module.css";
@@ -7,6 +8,8 @@ import styles from "./SearchBox.module.css";
 function formatDeg(value: number, signed = false): string {
   return `${signed && value >= 0 ? "+" : ""}${value.toFixed(4)}°`;
 }
+
+const READY_SET = new Set(READY as string[]);
 
 export default function SearchBox({ compact = false }: { compact?: boolean }) {
   const navigate = useNavigate();
@@ -121,7 +124,10 @@ export default function SearchBox({ compact = false }: { compact?: boolean }) {
                         onMouseEnter={() => setActive(index)}
                         onClick={() => choose(s)}
                       >
-                        <span className={styles.optionName}>{s.name}</span>
+                        <span className={styles.optionName}>
+                          {s.name}
+                          {READY_SET.has(s.name) ? <span className={styles.ready}>ready</span> : null}
+                        </span>
                         <span className={styles.optionNote}>{s.note}</span>
                       </div>
                     </li>

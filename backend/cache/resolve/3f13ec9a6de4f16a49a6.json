@@ -1,0 +1,13 @@
+{
+ "query": "G 158-27",
+ "name": "G 158-27",
+ "simbad_id": "G 158-27",
+ "ra": 1.6799888292112501,
+ "dec": -7.538060861407779,
+ "pmra": -811.566,
+ "pmdec": -1893.251,
+ "parallax": 206.35,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

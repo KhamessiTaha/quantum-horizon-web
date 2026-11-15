@@ -1,0 +1,13 @@
+{
+ "query": "2MASS J11145133-2618235",
+ "name": "2MASS J11145133-2618235",
+ "simbad_id": "2MASS J11145133-2618235",
+ "ra": 168.71390499999998,
+ "dec": -26.306545,
+ "pmra": -2927.2,
+ "pmdec": -374.2,
+ "parallax": 176.8,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

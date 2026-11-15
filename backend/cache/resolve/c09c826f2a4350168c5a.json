@@ -1,0 +1,13 @@
+{
+ "query": "* del Pav",
+ "name": "* del Pav",
+ "simbad_id": "* del Pav",
+ "ra": 302.1817036316884,
+ "dec": -66.18206743589695,
+ "pmra": 1211.761,
+ "pmdec": -1130.237,
+ "parallax": 163.9544,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

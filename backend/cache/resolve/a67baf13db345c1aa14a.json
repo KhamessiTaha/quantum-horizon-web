@@ -1,0 +1,13 @@
+{
+ "query": "CD-40  9712",
+ "name": "CD-40  9712",
+ "simbad_id": "CD-40  9712",
+ "ra": 233.05388462875788,
+ "dec": -41.27559178719,
+ "pmra": -1176.447,
+ "pmdec": -1030.97,
+ "parallax": 168.9965,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

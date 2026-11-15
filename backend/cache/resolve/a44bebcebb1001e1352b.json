@@ -1,0 +1,13 @@
+{
+ "query": "T Tauri",
+ "name": "V* T Tau",
+ "simbad_id": "V* T Tau",
+ "ra": 65.49763328083,
+ "dec": 19.535120109259996,
+ "pmra": 11.682,
+ "pmdec": -14.341,
+ "parallax": 6.8901,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

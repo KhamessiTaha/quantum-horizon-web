@@ -1,0 +1,13 @@
+{
+ "query": "Fomalhaut",
+ "name": "* alf PsA",
+ "simbad_id": "* alf PsA",
+ "ra": 344.4126927211701,
+ "dec": -29.622237033389442,
+ "pmra": 328.95,
+ "pmdec": -164.67,
+ "parallax": 129.81,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

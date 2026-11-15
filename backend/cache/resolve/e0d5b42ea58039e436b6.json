@@ -1,0 +1,13 @@
+{
+ "query": "61 Cygni A",
+ "name": "*  61 Cyg A",
+ "simbad_id": "*  61 Cyg A",
+ "ra": 316.7247482895925,
+ "dec": 38.74941731943694,
+ "pmra": 4164.209,
+ "pmdec": 3249.614,
+ "parallax": 285.9949,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

@@ -1,0 +1,13 @@
+{
+ "query": "EGGR 180",
+ "name": "EGGR 180",
+ "simbad_id": "EGGR 180",
+ "ra": 67.80238099867749,
+ "dec": 58.978136863278614,
+ "pmra": 1334.78,
+ "pmdec": -1947.638,
+ "parallax": 181.273,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

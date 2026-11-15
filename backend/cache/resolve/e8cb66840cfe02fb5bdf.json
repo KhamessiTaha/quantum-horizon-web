@@ -1,0 +1,13 @@
+{
+ "query": "LAWD 37",
+ "name": "LAWD 37",
+ "simbad_id": "LAWD 37",
+ "ra": 176.42882056099126,
+ "dec": -64.84151721050888,
+ "pmra": 2661.64,
+ "pmdec": -344.933,
+ "parallax": 215.6753,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

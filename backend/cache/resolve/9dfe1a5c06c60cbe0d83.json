@@ -1,0 +1,13 @@
+{
+ "query": "* alf Cen A",
+ "name": "* alf Cen A",
+ "simbad_id": "* alf Cen A",
+ "ra": 219.90205833170774,
+ "dec": -60.83399268831004,
+ "pmra": -3679.25,
+ "pmdec": 473.67,
+ "parallax": 742.12,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

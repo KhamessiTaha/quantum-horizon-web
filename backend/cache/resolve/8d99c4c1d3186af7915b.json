@@ -1,0 +1,13 @@
+{
+ "query": "BD-12  4523",
+ "name": "BD-12  4523",
+ "simbad_id": "BD-12  4523",
+ "ra": 247.57524331140954,
+ "dec": -12.662589227147778,
+ "pmra": -94.21,
+ "pmdec": -1183.917,
+ "parallax": 232.139,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

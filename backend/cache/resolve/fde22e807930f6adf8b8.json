@@ -1,0 +1,13 @@
+{
+ "query": "HD 239960B",
+ "name": "HD 239960B",
+ "simbad_id": "HD 239960B",
+ "ra": 336.9991483422729,
+ "dec": 57.697151875743884,
+ "pmra": -934.098,
+ "pmdec": -686.244,
+ "parallax": 249.9668,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

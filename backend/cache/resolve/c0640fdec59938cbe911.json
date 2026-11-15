@@ -1,0 +1,13 @@
+{
+ "query": "G 254-29",
+ "name": "G 254-29",
+ "simbad_id": "G 254-29",
+ "ra": 176.9224454840937,
+ "dec": 78.69116006356583,
+ "pmra": 748.418,
+ "pmdec": 480.804,
+ "parallax": 190.3251,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

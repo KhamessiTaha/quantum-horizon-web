@@ -1,0 +1,13 @@
+{
+ "query": "L  100-115",
+ "name": "L  100-115",
+ "simbad_id": "L  100-115",
+ "ra": 145.69309564629958,
+ "dec": -68.88500248283722,
+ "pmra": -75.828,
+ "pmdec": 1128.849,
+ "parallax": 153.7593,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

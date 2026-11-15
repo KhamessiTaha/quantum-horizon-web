@@ -1,0 +1,13 @@
+{
+ "query": "Crab Nebula",
+ "name": "M   1",
+ "simbad_id": "M   1",
+ "ra": 83.6324,
+ "dec": 22.0174,
+ "pmra": 0.0,
+ "pmdec": 0.0,
+ "parallax": null,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

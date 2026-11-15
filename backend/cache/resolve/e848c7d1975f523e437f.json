@@ -1,0 +1,13 @@
+{
+ "query": "NAME Scholz's star",
+ "name": "NAME Scholz's star",
+ "simbad_id": "NAME Scholz's star",
+ "ra": 110.013557,
+ "dec": -8.780528999999998,
+ "pmra": -52.7,
+ "pmdec": -95.8,
+ "parallax": 148.8,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}

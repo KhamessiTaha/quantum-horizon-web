@@ -1,0 +1,13 @@
+{
+ "query": "G   9-38B",
+ "name": "G   9-38B",
+ "simbad_id": "G   9-38B",
+ "ra": 134.56311721624292,
+ "dec": 19.762732423316113,
+ "pmra": -937.133,
+ "pmdec": -34.559,
+ "parallax": 196.2619,
+ "epoch": "J2000.0",
+ "source": "SIMBAD (simbad.cfa.harvard.edu)",
+ "featured": null
+}
