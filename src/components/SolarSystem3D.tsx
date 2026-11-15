@@ -753,6 +753,16 @@ function BodyCard({ selection, jd, onClose }: { selection: Selection; jd: number
         <Link to={trackLink(body.name)} className={`btn btn-primary ${styles.blinkButton}`}>
           Blink it with SPHEREx
         </Link>
+      ) : body && body.designation ? (
+        <>
+          <Link
+            to={trackLink(body.name, "D2", body.designation, body.group === "comet" ? "comet" : "asteroid")}
+            className={`btn btn-primary ${styles.blinkButton}`}
+          >
+            Track it with SPHEREx
+          </Link>
+          <span className={styles.trackNote}>Asks NASA's moving-object search live, about 20 seconds the first time.</span>
+        </>
       ) : null}
       {selection.type !== "sun" ? (
         <span className={styles.source}>

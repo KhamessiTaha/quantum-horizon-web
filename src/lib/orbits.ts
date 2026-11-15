@@ -26,6 +26,7 @@ export interface SmallBody {
   ma: number;
   diameter: number | null;
   H: number | null;
+  designation: string | null;
 }
 
 export const SMALL_BODIES: SmallBody[] = (RAW as { bodies: (string | number | null)[][] }).bodies.map((row) => ({
@@ -41,6 +42,7 @@ export const SMALL_BODIES: SmallBody[] = (RAW as { bodies: (string | number | nu
   ma: row[9] as number,
   diameter: row[10] as number | null,
   H: row[11] as number | null,
+  designation: (row[12] as string | null) ?? null,
 }));
 
 export const SMALL_BODY_SOURCE = (RAW as { source: string }).source;

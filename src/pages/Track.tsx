@@ -16,7 +16,11 @@ export default function Track() {
   const requested = params.get("body") ?? "Vesta";
   const body = BLINKABLE_ASTEROIDS.find((n) => n.toLowerCase() === requested.toLowerCase()) ?? requested;
   const detector = DETECTORS.includes(params.get("det") ?? "") ? (params.get("det") as string) : "D2";
-  const track = useAsync<TrackResponse>((signal) => fetchTrack(body, detector, signal), `${body}|${detector}`);
+  const id = params.get("id");
+  const kind = params.get("kind") === "comet" ? "comet" : "asteroid";
+  const stored = BLINKABLE_ASTEROIDS.includes(body);
+  const track = useAsync<TrackResponse>((signal) => fetchTrack(body, detector, id, kind, signal), `${body}|${detector}`);
+  const link = (d: string) => trackLink(body, d, id, kind);
   const [tick, setTick] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [held, setHeld] = useState<number | null>(null);
@@ -40,6 +44,11 @@ export default function Track() {
         </Link>
         <span className={styles.anotherLabel}>Asteroids</span>
         <div className={styles.chips}>
+          {stored ? null : (
+            <span className={styles.chip} aria-current="page">
+              {body}
+            </span>
+          )}
           {BLINKABLE_ASTEROIDS.map((name) => (
             <Link key={name} to={trackLink(name, detector)} className={styles.chip} aria-current={name === body ? "page" : undefined}>
               {name}
@@ -54,7 +63,7 @@ export default function Track() {
       <div className={styles.titleRow}>
         <div className={styles.model}>
           <Suspense fallback={null}>
-            <Body3D kind="asteroid" id={body} className={styles.modelStage} caption={false} />
+            <Body3D kind={kind} id={body} className={styles.modelStage} caption={false} />
           </Suspense>
         </div>
         <div>
@@ -68,7 +77,7 @@ export default function Track() {
 
       <div className={styles.detectors} role="group" aria-label="Detector">
         {DETECTORS.map((d) => (
-          <Link key={d} to={trackLink(body, d)} className={styles.detector} aria-current={d === detector ? "true" : undefined} replace>
+          <Link key={d} to={link(d)} className={styles.detector} aria-current={d === detector ? "true" : undefined} replace>
             {d}
           </Link>
         ))}
@@ -76,7 +85,11 @@ export default function Track() {
       </div>
 
       {track.loading && !track.data ? (
-        <p className={`panel ${styles.state}`}>Reading {body}'s SPHEREx exposures from NASA's public archive on AWS…</p>
+        <p className={`panel ${styles.state}`}>
+          {stored
+            ? `Reading ${body}'s SPHEREx exposures from NASA's public archive on AWS…`
+            : `Asking NASA's moving-object search where SPHEREx caught ${body}, then reading those exposures. The first look takes about 20 seconds…`}
+        </p>
       ) : track.error ? (
         <p className={`panel ${styles.state}`}>{track.error}</p>
       ) : track.data && frame ? (
@@ -151,6 +164,16 @@ export default function Track() {
               ) : null}
               <p className={styles.summary}>{m?.summary}</p>
             </div>
+            <figure className={`panel ${styles.stackCard}`}>
+              <img src={track.data.stack_image} alt={`Median of all ${frames.length} frames of ${body}`} className={styles.stackImage} />
+              <figcaption>
+                <strong>All frames, stacked on {body}</strong>
+                <span>
+                  The stars move between frames and cancel out; {body} stays put and adds up.
+                  {track.data.stack_snr !== null ? ` Signal-to-noise ${Math.round(track.data.stack_snr)}.` : " Nothing stands out here."}
+                </span>
+              </figcaption>
+            </figure>
             <dl className={`panel ${styles.facts}`}>
               <div>
                 <dt>This frame</dt>
@@ -159,6 +182,10 @@ export default function Track() {
               <div>
                 <dt>Wavelength</dt>
                 <dd className="mono">{frame.wavelength_um ? `${frame.wavelength_um.toFixed(2)} µm` : "—"}</dd>
+              </div>
+              <div>
+                <dt>Typical brightness</dt>
+                <dd className={`mono ${styles.predicted}`}>{track.data.typical_vmag !== null ? `V ${track.data.typical_vmag.toFixed(1)}` : "—"}</dd>
               </div>
               <div>
                 <dt>Predicted brightness</dt>

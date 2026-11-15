@@ -332,3 +332,32 @@
     flex-basis: 100%;
   }
 }
+
+.stackCard {
+  margin: 0;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.stackImage {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+}
+
+.stackCard figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.stackCard strong {
+  font-size: 13px;
+  color: var(--text);
+}

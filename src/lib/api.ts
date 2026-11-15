@@ -355,12 +355,17 @@ export interface TrackResponse {
   exposures_on_detector: number;
   span_days: number;
   frames: TrackFrame[];
+  stack_image: string;
+  stack_snr: number | null;
+  typical_vmag: number | null;
   fov_deg: number;
   pixel_arcsec: number;
   measurement: { mean_offset_arcsec: number | null; sigma_arcsec: number | null; label: Confidence; summary: string };
   source: string;
 }
 
-export function fetchTrack(body: string, detector: string, signal?: AbortSignal): Promise<TrackResponse> {
-  return get<TrackResponse>("/api/track", new URLSearchParams({ body, det: detector }), signal);
+export function fetchTrack(body: string, detector: string, id: string | null, kind: string, signal?: AbortSignal): Promise<TrackResponse> {
+  const search = new URLSearchParams({ body, det: detector, kind });
+  if (id) search.set("id", id);
+  return get<TrackResponse>("/api/track", search, signal);
 }

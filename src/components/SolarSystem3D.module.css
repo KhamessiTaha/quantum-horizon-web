@@ -395,3 +395,8 @@
   margin-top: 8px;
   justify-content: center;
 }
+
+.trackNote {
+  font-size: 11px;
+  color: var(--text-quiet);
+}
