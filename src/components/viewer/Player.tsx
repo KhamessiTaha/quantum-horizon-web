@@ -26,7 +26,7 @@ function waitingMessage(elapsedMs: number): string {
   if (elapsedMs < 4000) return "Asking IRSA which SPHEREx images cover this position…";
   if (elapsedMs < 20000) return "Reading just the pixels we need, straight from the SPHEREx mirror on AWS…";
   if (elapsedMs < 60000) return "Masking bad pixels, removing the zodiacal light and aligning every frame…";
-  return "Still reading frames. A position is slow only the first time; after that it is served from the cache.";
+  return "Still reading frames. A new position can take two to three minutes the first time; after that it loads in under a second.";
 }
 
 export default function Player({
