@@ -390,3 +390,8 @@
     left: 10px;
   }
 }
+
+.blinkButton {
+  margin-top: 8px;
+  justify-content: center;
+}

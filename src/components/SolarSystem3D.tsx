@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 import Body3D, { type BodyKind } from "./Body3D.tsx";
+import { BLINKABLE_ASTEROIDS, trackLink } from "../data/asteroids.ts";
 import BRIGHT from "../data/brightstars.json";
 import {
   bodyPosition,
@@ -42,10 +44,13 @@ const GROUPS: { id: Group; label: string; colour: string; size: number }[] = [
 
 const GROUP_STYLE = new Map(GROUPS.map((g) => [g.id, g]));
 
-type Filter = "all" | "planets" | Group;
+type Filter = "all" | "planets" | "blink" | Group;
+
+const BLINKABLE = new Set(BLINKABLE_ASTEROIDS);
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
+  { id: "blink", label: "Blink with SPHEREx" },
   { id: "planets", label: "Planets" },
   { id: "famous", label: "Visited" },
   { id: "neo", label: "Near-Earth" },
@@ -187,7 +192,9 @@ export default function SolarSystem3D({ height }: { height?: string } = {}) {
   const listed = useMemo(() => {
     const text = search.trim().toLowerCase();
     const planets: Selection[] = PLANETS.map((planet) => ({ type: "planet", planet }));
-    const bodies: Selection[] = SMALL_BODIES.filter((b) => filter === "all" || b.group === filter).map((body) => ({ type: "body", body }));
+    const bodies: Selection[] = SMALL_BODIES.filter((b) => filter === "all" || b.group === filter || (filter === "blink" && BLINKABLE.has(b.name))).map(
+      (body) => ({ type: "body", body }),
+    );
     const pool = filter === "planets" ? planets : filter === "all" ? [...planets, ...bodies.filter((s) => s.type === "body" && s.body.group === "famous"), ...bodies] : bodies;
     const seen = new Set<string>();
     const matches = pool.filter((s) => {
@@ -371,7 +378,8 @@ export default function SolarSystem3D({ height }: { height?: string } = {}) {
       }
     }
 
-    function applyFilter(filter: Filter) {
+    function applyFilter(chosen: Filter) {
+      const filter = chosen === "blink" ? "all" : chosen;
       state.filter = filter;
       for (const [group, { points }] of groupPoints) {
         points.visible = filter === "all" || filter === group || group === "famous";
@@ -740,6 +748,11 @@ function BodyCard({ selection, jd, onClose }: { selection: Selection; jd: number
             ? `About ${(rate / SPHEREX_PIXEL_ARCSEC).toFixed(rate / SPHEREX_PIXEL_ARCSEC < 10 ? 1 : 0)} SPHEREx pixels an hour: it would jump between exposures, the kind of mover a blink catches.`
             : `About ${((rate * 24) / SPHEREX_PIXEL_ARCSEC).toFixed(1)} SPHEREx pixels a day: too slow to see in one visit, but it shifts between passes six months apart.`}
         </p>
+      ) : null}
+      {body && BLINKABLE.has(body.name) ? (
+        <Link to={trackLink(body.name)} className={`btn btn-primary ${styles.blinkButton}`}>
+          Blink it with SPHEREx
+        </Link>
       ) : null}
       {selection.type !== "sun" ? (
         <span className={styles.source}>

@@ -332,3 +332,35 @@ export function fetchNearby(ra: number, dec: number, radius: number, signal?: Ab
   const search = new URLSearchParams({ ra: ra.toFixed(3), dec: dec.toFixed(3), radius: radius.toFixed(3) });
   return get<NearbyResponse>("/api/nearby", search, signal);
 }
+
+export interface TrackFrame {
+  date: string;
+  mjd: number;
+  ra: number;
+  dec: number;
+  vmag: number | null;
+  wavelength_um: number | null;
+  offset_arcsec: number | null;
+  snr: number | null;
+  saturated: boolean;
+  measured_px: [number, number] | null;
+  size_px: number;
+  image: string;
+}
+
+export interface TrackResponse {
+  name: string;
+  detector: string;
+  exposures_total: number;
+  exposures_on_detector: number;
+  span_days: number;
+  frames: TrackFrame[];
+  fov_deg: number;
+  pixel_arcsec: number;
+  measurement: { mean_offset_arcsec: number | null; sigma_arcsec: number | null; label: Confidence; summary: string };
+  source: string;
+}
+
+export function fetchTrack(body: string, detector: string, signal?: AbortSignal): Promise<TrackResponse> {
+  return get<TrackResponse>("/api/track", new URLSearchParams({ body, det: detector }), signal);
+}
