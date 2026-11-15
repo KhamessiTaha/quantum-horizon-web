@@ -17,3 +17,6 @@ node_modules/
 backend/cache/cubes/
 backend/cache/views/
 backend/cache/images/
+
+# Frontend build output
+dist/
