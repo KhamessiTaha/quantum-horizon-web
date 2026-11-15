@@ -316,3 +316,39 @@
 .galleryHold {
   height: 300px;
 }
+
+.diffFrame {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #0d1117;
+}
+
+.diffFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scale(2.6);
+}
+
+.diffKey {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: -2px;
+  font-size: 11px;
+  color: var(--text-quiet);
+}
+
+.diffKey i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.diffKey i[data-tone="now"] {
+  margin-left: 6px;
+  background: var(--predicted);
+}

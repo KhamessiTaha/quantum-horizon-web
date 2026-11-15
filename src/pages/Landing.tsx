@@ -118,7 +118,15 @@ export default function Landing() {
                   className={styles.stripItem}
                   data-active={"pass" in item && item.pass === activePass}
                 >
-                  {item.image ? (
+                  {item.image && !("pass" in item) ? (
+                    <div className={styles.diffFrame}>
+                      <img
+                        src={imageUrl(item.image)}
+                        alt="Barnard's Star, last pass minus first: cyan where it was, amber where it is now"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : item.image ? (
                     <img
                       src={imageUrl(item.image)}
                       alt={`Barnard's Star, ${item.label}`}
@@ -129,6 +137,11 @@ export default function Landing() {
                     <div className={styles.framePlaceholder} role="img" aria-label="Loading a SPHEREx frame" />
                   )}
                   <span className="mono">{item.label || "loading"}</span>
+                  {item.image && !("pass" in item) ? (
+                    <span className={styles.diffKey}>
+                      <i data-tone="was" /> was <i data-tone="now" /> now
+                    </span>
+                  ) : null}
                 </div>
               ))}
             </div>
