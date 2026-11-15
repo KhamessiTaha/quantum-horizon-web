@@ -267,8 +267,14 @@ async function get<T>(path: string, search: URLSearchParams, signal?: AbortSigna
   return (await response.json()) as T;
 }
 
-export function fetchFrames(query: TargetQuery, signal?: AbortSignal): Promise<FramesResponse> {
-  return get<FramesResponse>("/api/frames", params(query), signal);
+/** A first look at a new position can outlast the server's time limit; every frame read is kept, so one retry usually finishes. */
+export async function fetchFrames(query: TargetQuery, signal?: AbortSignal): Promise<FramesResponse> {
+  try {
+    return await get<FramesResponse>("/api/frames", params(query), signal);
+  } catch (error) {
+    if (signal?.aborted || error instanceof ApiError) throw error;
+    return get<FramesResponse>("/api/frames", params(query), signal);
+  }
 }
 
 export function fetchSpectrum(

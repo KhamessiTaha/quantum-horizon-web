@@ -470,8 +470,9 @@ function renderTrack(
 
 function describeError(error: string, status: number | null): string {
   if (status === 404) return error;
-  if (status === 503) return `${error} The archive is answering slowly or is down; cached targets still work.`;
+  if (status === 503)
+    return "NASA's archive (IRSA) is not answering right now, so this position cannot be looked up yet. Try again in a minute; the five featured targets always work.";
   if (status === null)
-    return "The measurement server could not be reached. It may be starting up; try again in a few seconds.";
+    return "This position took longer than the server allows, twice. Everything read so far is kept, so reloading the page usually finishes it. If it keeps failing, the archive may be down; the five featured targets always work.";
   return `Could not load this view. ${error}`;
 }

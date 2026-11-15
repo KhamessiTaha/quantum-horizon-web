@@ -37,6 +37,7 @@ interface AladinCatalog {
 
 interface AladinOverlay {
   add: (shape: unknown) => void;
+  removeAll: () => void;
 }
 
 interface AladinInstance {
@@ -46,6 +47,7 @@ interface AladinInstance {
   gotoRaDec: (ra: number, dec: number) => void;
   getRaDec: () => [number, number];
   getFov: () => [number, number];
+  setFoV: (fov: number) => void;
   on: (event: string, callback: (payload: never) => void) => void;
 }
 
@@ -56,6 +58,7 @@ interface AladinApi {
   source: (ra: number, dec: number, data: Record<string, unknown>) => unknown;
   graphicOverlay: (options: Record<string, unknown>) => AladinOverlay;
   polygon: (corners: [number, number][], options?: Record<string, unknown>) => unknown;
+  circle: (ra: number, dec: number, radiusDeg: number, options?: Record<string, unknown>) => unknown;
 }
 
 let loading: Promise<AladinApi> | null = null;
@@ -140,6 +143,7 @@ export default function SkyMap({ ra, dec, viewDeg, title, subtitle, field, detec
   const instance = useRef<AladinInstance | null>(null);
   const api = useRef<AladinApi | null>(null);
   const labelled = useRef<AladinCatalog | null>(null);
+  const selection = useRef<AladinOverlay | null>(null);
   const unlabelled = useRef<AladinCatalog | null>(null);
   const lastObjectClick = useRef(0);
   const moveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -189,6 +193,9 @@ export default function SkyMap({ ra, dec, viewDeg, title, subtitle, field, detec
             ]),
           );
         }
+
+        selection.current = aladinApi.graphicOverlay({ color: "#5cc8ff", lineWidth: 3 });
+        map.addOverlay(selection.current);
 
         labelled.current = aladinApi.catalog({
           name: "Named objects",
@@ -262,9 +269,20 @@ export default function SkyMap({ ra, dec, viewDeg, title, subtitle, field, detec
     unlabelled.current.addSources(objects.filter((o) => !labels.has(o.name)).map(toSource));
   }, [objects, mapReady, viewDeg]);
 
+  useEffect(() => {
+    const aladinApi = api.current;
+    const overlay = selection.current;
+    if (!mapReady || !aladinApi || !overlay) return;
+    overlay.removeAll();
+    if (picked) overlay.add(aladinApi.circle(picked.ra, picked.dec, Math.max(viewDeg / 40, 0.004)));
+  }, [picked, mapReady, viewDeg]);
+
   function choose(o: NamedObject) {
     setPicked({ ra: o.ra, dec: o.dec, name: o.display, query: o.name, kind: o.kind });
-    instance.current?.gotoRaDec(o.ra, o.dec);
+    const map = instance.current;
+    if (!map) return;
+    map.gotoRaDec(o.ra, o.dec);
+    map.setFoV(Math.min(map.getFov()[0], Math.max(viewDeg / 3, 0.1)));
   }
 
   async function copy(text: string) {
@@ -317,7 +335,11 @@ export default function SkyMap({ ra, dec, viewDeg, title, subtitle, field, detec
                       {picked.dec.toFixed(4)}°
                     </span>
                     <div className={styles.actions}>
-                      <Link to={blinkLink(picked, detector)} className="btn btn-primary">
+                      <Link
+                        to={blinkLink(picked, detector)}
+                        className="btn btn-primary"
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                      >
                         Blink this
                       </Link>
                       <button type="button" className="btn" onClick={() => copy(sexagesimal(picked.ra, picked.dec))}>
@@ -340,7 +362,12 @@ export default function SkyMap({ ra, dec, viewDeg, title, subtitle, field, detec
                   <ul>
                     {objects.slice(0, 14).map((o) => (
                       <li key={o.name}>
-                        <button type="button" className={styles.nameButton} onClick={() => choose(o)}>
+                        <button
+                          type="button"
+                          className={styles.nameButton}
+                          aria-pressed={picked?.query === o.name}
+                          onClick={() => choose(o)}
+                        >
                           <span>{o.display}</span>
                           <span className={styles.kind}>{o.kind}</span>
                         </button>

@@ -19,7 +19,9 @@ interface Loaded<T> {
 const EMPTY = { key: "", data: null, error: null, status: null };
 
 /**
- * Runs a request when its key changes, keeping the previous result on screen while the next one loads.
+ * Runs a request when its key changes. While the next one loads, the previous result stays on screen only if it is
+ * for the same place (the part of the key before the first "|"), so switching detector keeps the image but switching
+ * target never shows the old target under the new name.
  *
  * Loading is derived by comparing the key with the key that last landed, so no state is set while rendering.
  */
@@ -61,8 +63,9 @@ export function useAsync<T>(load: (signal: AbortSignal) => Promise<T>, key: stri
   }, [key, enabled]);
 
   const settled = loaded.key === key;
+  const samePlace = loaded.key.split("|")[0] === key.split("|")[0];
   return {
-    data: settled ? loaded.data : enabled ? loaded.data : null,
+    data: settled ? loaded.data : enabled && samePlace ? loaded.data : null,
     error: settled ? loaded.error : null,
     status: settled ? loaded.status : null,
     loading: enabled && !settled,

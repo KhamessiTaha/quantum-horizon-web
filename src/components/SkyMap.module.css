@@ -138,8 +138,13 @@
   cursor: pointer;
 }
 
-.nameButton:hover {
+.nameButton:hover,
+.nameButton[aria-pressed="true"] {
   background: var(--accent-tint);
+}
+
+.nameButton[aria-pressed="true"] {
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 
 .kind {

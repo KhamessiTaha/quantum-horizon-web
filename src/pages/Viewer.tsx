@@ -25,7 +25,7 @@ import { parseViewState, queryKey, targetQuery, toSearchParams, type Panel, type
 import styles from "./Viewer.module.css";
 
 const PANELS: { id: Panel; label: string }[] = [
-  { id: "findings", label: "Motion" },
+  { id: "findings", label: "Sky map" },
   { id: "spectrum", label: "Spectrum" },
   { id: "brightness", label: "Brightness" },
   { id: "movers", label: "What moved" },
@@ -214,30 +214,26 @@ export default function Viewer() {
               />
             ) : null}
             {view.panel === "findings" ? (
-              <p className={styles.analysisHint}>
-                The motion measurement is beside the image. Open <strong>Spectrum</strong> to measure flux against
-                wavelength in each pass, <strong>Brightness</strong> to follow one band over time, or{" "}
-                <strong>What moved</strong> to search the whole field for anything else that changed position.
-              </p>
+              mapField ? (
+                <SkyMap
+                  key={key.split("|")[0]}
+                  ra={mapField.ra}
+                  dec={mapField.dec}
+                  viewDeg={Math.max(mapField.sizeDeg * 8, 0.4)}
+                  title="Where this is in the sky"
+                  subtitle={`The blue square is the ${(mapField.sizeDeg * 60).toFixed(1)}′ SPHEREx field you are blinking. Click anywhere, or on an amber name, to blink somewhere else.`}
+                  field={mapField}
+                  detector={view.detector}
+                  startOpen
+                />
+              ) : (
+                <p className={styles.analysisHint}>The sky map appears as soon as the position is known.</p>
+              )
             ) : null}
           </section>
         </div>
         <FindingsPanel frames={frames.data} />
       </div>
-
-      {mapField ? (
-        <SkyMap
-          key={key}
-          ra={mapField.ra}
-          dec={mapField.dec}
-          viewDeg={Math.max(mapField.sizeDeg * 8, 0.4)}
-          title="Where this is in the sky"
-          subtitle={`${heading} on all-sky survey imagery. The blue square is the ${(mapField.sizeDeg * 60).toFixed(1)}′ SPHEREx field you are blinking. Click anywhere, or on a name, to blink somewhere else.`}
-          field={mapField}
-          detector={view.detector}
-          startOpen
-        />
-      ) : null}
 
       <footer className={styles.footer}>
         <a href="/methods">How these numbers are measured, and where they stop</a>
