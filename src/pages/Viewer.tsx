@@ -66,10 +66,12 @@ export default function Viewer() {
     hasTarget && view.gaia && !frames.loading,
   );
 
+  const analysesReady = hasTarget && !!frames.data && !frames.loading && !view.embed;
+
   const movers = useAsync<MoversResponse>(
     (signal) => fetchMovers(query, signal),
     `${key}|movers`,
-    hasTarget && view.panel === "movers" && !frames.loading,
+    analysesReady,
   );
   const [selectedMover, setSelectedMover] = useState<string | null>(null);
 
@@ -77,12 +79,12 @@ export default function Viewer() {
   const spectrum = useAsync<SpectrumResponse>(
     (signal) => fetchSpectrum(query, view.pick, signal),
     `${key}|spec|${pickKey}`,
-    hasTarget && view.panel === "spectrum" && !frames.loading,
+    analysesReady,
   );
   const brightness = useAsync<LightCurveResponse>(
     (signal) => fetchLightCurve(query, signal),
     `${key}|lc`,
-    hasTarget && view.panel === "brightness" && !frames.loading,
+    analysesReady,
   );
 
   const colour = useColour(query, frames.data, view.colour && view.mode === "blink" && !!frames.data);
