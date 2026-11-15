@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { lazy, Suspense, useState } from "react";
 import HeroBlink from "../components/HeroBlink.tsx";
 import SearchBox from "../components/SearchBox.tsx";
 import SkyMap from "../components/SkyMap.tsx";
@@ -7,6 +7,8 @@ import { FEATURED_TARGETS, viewLink } from "../data/featuredTargets.ts";
 import { fetchFrames, imageUrl, type FramesResponse } from "../lib/api.ts";
 import { useAsync } from "../lib/useAsync.ts";
 import styles from "./Landing.module.css";
+
+const Neighbourhood3D = lazy(() => import("../components/Neighbourhood3D.tsx"));
 
 const HERO_TARGET = { target: "Barnard's Star", ra: null, dec: null, detector: "D2", fovDeg: 0.06 };
 
@@ -32,6 +34,8 @@ export default function Landing() {
   const hero = useAsync<FramesResponse>((signal) => fetchFrames(HERO_TARGET, signal), "landing-hero");
   const motion = hero.data?.measurement?.motion ?? null;
   const [activePass, setActivePass] = useState<number | null>(null);
+  const [params] = useSearchParams();
+  const [explore, setExplore] = useState<"sky" | "3d">(params.get("explore") === "3d" ? "3d" : "sky");
   const strip = [
     ...(hero.data?.passes.map((p) => ({ label: `Pass ${p.index} · ${p.mid_date}`, image: p.image, pass: p.index })) ?? []),
     ...(hero.data?.difference_image ? [{ label: "Difference", image: hero.data.difference_image }] : []),
@@ -122,8 +126,21 @@ export default function Landing() {
       <section id="sky" className={`container ${styles.explore}`}>
         <div className={styles.sectionHead}>
           <h2>Or pick any spot on the sky</h2>
-          <p>Pan and zoom the infrared sky, click a named object or any position, and blink it.</p>
+          <p>Pan and zoom the infrared sky, or fly through the Sun's neighbourhood in 3D, and blink what you find.</p>
         </div>
+        <div className={styles.exploreTabs} role="tablist" aria-label="Explore">
+          <button type="button" role="tab" className="btn toggle" aria-selected={explore === "sky"} onClick={() => setExplore("sky")}>
+            Sky map
+          </button>
+          <button type="button" role="tab" className="btn toggle" aria-selected={explore === "3d"} onClick={() => setExplore("3d")}>
+            3D neighbourhood
+          </button>
+        </div>
+        {explore === "3d" ? (
+          <Suspense fallback={<p className={styles.exploreLoading}>Loading the 3D neighbourhood…</p>}>
+            <Neighbourhood3D />
+          </Suspense>
+        ) : (
         <SkyMap
           ra={83.8221}
           dec={-5.3911}
@@ -132,6 +149,7 @@ export default function Landing() {
           title="Explore the sky"
           subtitle="Orion in the infrared, as NASA’s WISE saw it. Scroll to zoom into anything, click it, and blink it with SPHEREx. Amber names come from SIMBAD."
         />
+        )}
       </section>
 
       <section id="how" className={styles.band}>

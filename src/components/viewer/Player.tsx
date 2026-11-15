@@ -54,7 +54,9 @@ export default function Player({
   const stage = useRef<HTMLDivElement>(null);
 
   const passes = frames?.passes ?? [];
-  const visible = passes.filter((p) => !view.hidden.includes(p.index));
+  const colourReady = view.colour && view.mode === "blink" && !!colourImages && Object.keys(colourImages).length > 0;
+  const inColour = (index: number) => !colourReady || !!colourImages?.[index];
+  const visible = passes.filter((p) => !view.hidden.includes(p.index) && inColour(p.index));
   const blink = view.mode === "blink";
   const isPlaying = playing && blink && visible.length > 1 && !loading;
   const index = visible.length ? Math.min(current, visible.length - 1) : 0;
@@ -340,7 +342,7 @@ export default function Player({
                 type="button"
                 className="btn toggle mono"
                 aria-pressed={active}
-                disabled={hidden}
+                disabled={hidden || !inColour(p.index)}
                 title={`${p.start} to ${p.end}, ${p.frames_used} frames`}
                 onClick={() => {
                   setPlaying(false);

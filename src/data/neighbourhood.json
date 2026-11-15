@@ -1,0 +1,665 @@
+[
+ {
+  "query": "Barnard's Star",
+  "name": "Barnard's Star",
+  "group": "Challenge targets",
+  "ra": 269.45208,
+  "dec": 4.69336,
+  "parallax_mas": 546.976,
+  "distance_pc": 1.828,
+  "pmra": -801.55,
+  "pmdec": 10362.39,
+  "xyz_pc": [
+   -0.017,
+   -1.822,
+   0.15
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Epsilon Indi B",
+  "name": "Epsilon Indi B",
+  "group": "Challenge targets",
+  "ra": 331.04415,
+  "dec": -56.78284,
+  "parallax_mas": 270.658,
+  "distance_pc": 3.695,
+  "pmra": 3981.98,
+  "pmdec": -2466.83,
+  "xyz_pc": [
+   1.771,
+   -0.98,
+   -3.091
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "WISE 0855-0714",
+  "name": "WISE 0855-0714",
+  "group": "Challenge targets",
+  "ra": 133.81891,
+  "dec": -7.24705,
+  "parallax_mas": 439.0,
+  "distance_pc": 2.278,
+  "pmra": -8123.7,
+  "pmdec": 673.2,
+  "xyz_pc": [
+   -1.565,
+   1.63,
+   -0.287
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Luhman 16",
+  "name": "NAME Luhman 16",
+  "group": "Brown dwarfs",
+  "ra": 162.32881,
+  "dec": -53.31947,
+  "parallax_mas": 501.557,
+  "distance_pc": 1.994,
+  "pmra": -2767.5,
+  "pmdec": 356.86,
+  "xyz_pc": [
+   -1.135,
+   0.362,
+   -1.599
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Gliese 229 B",
+  "name": "HD  42581B",
+  "group": "Brown dwarfs",
+  "ra": 92.645,
+  "dec": -21.86667,
+  "parallax_mas": 173.19,
+  "distance_pc": 5.774,
+  "pmra": -137.0,
+  "pmdec": -714.1,
+  "xyz_pc": [
+   -0.247,
+   5.353,
+   -2.151
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Gliese 570 D",
+  "name": "GJ 570 D",
+  "group": "Brown dwarfs",
+  "ra": 224.31234,
+  "dec": -21.36326,
+  "parallax_mas": 169.3,
+  "distance_pc": 5.907,
+  "pmra": 1038.08,
+  "pmdec": -1677.69,
+  "xyz_pc": [
+   -3.936,
+   -3.843,
+   -2.152
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "UGPS J072227.51-054031.2",
+  "name": "WISE J072227.27-054029.9",
+  "group": "Brown dwarfs",
+  "ra": 110.61628,
+  "dec": -5.67599,
+  "parallax_mas": 242.8,
+  "distance_pc": 4.119,
+  "pmra": -903.74,
+  "pmdec": 351.81,
+  "xyz_pc": [
+   -1.443,
+   3.836,
+   -0.407
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "2MASS J04151954-0935066",
+  "name": "2MASSI J0415195-093506",
+  "group": "Brown dwarfs",
+  "ra": 63.83143,
+  "dec": -9.58519,
+  "parallax_mas": 174.34,
+  "distance_pc": 5.736,
+  "pmra": 2193.0,
+  "pmdec": 527.0,
+  "xyz_pc": [
+   2.494,
+   5.076,
+   -0.955
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "SCR J1845-6357 B",
+  "name": "SCR J1845-6357B",
+  "group": "Brown dwarfs",
+  "ra": 281.2719,
+  "dec": -63.96328,
+  "parallax_mas": 259.45,
+  "distance_pc": 3.854,
+  "pmra": 2444.0,
+  "pmdec": 696.0,
+  "xyz_pc": [
+   0.331,
+   -1.659,
+   -3.463
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Proxima Centauri",
+  "name": "NAME Proxima Centauri",
+  "group": "Red dwarfs",
+  "ra": 217.42894,
+  "dec": -62.67949,
+  "parallax_mas": 768.067,
+  "distance_pc": 1.302,
+  "pmra": -3781.74,
+  "pmdec": 769.47,
+  "xyz_pc": [
+   -0.475,
+   -0.363,
+   -1.157
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Wolf 359",
+  "name": "Wolf  359",
+  "group": "Red dwarfs",
+  "ra": 164.1205,
+  "dec": 7.01472,
+  "parallax_mas": 415.179,
+  "distance_pc": 2.409,
+  "pmra": -3866.34,
+  "pmdec": -2699.22,
+  "xyz_pc": [
+   -2.299,
+   0.654,
+   0.294
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Lalande 21185",
+  "name": "HD  95735",
+  "group": "Red dwarfs",
+  "ra": 165.83415,
+  "dec": 35.96988,
+  "parallax_mas": 392.753,
+  "distance_pc": 2.546,
+  "pmra": -580.06,
+  "pmdec": -4776.59,
+  "xyz_pc": [
+   -1.998,
+   0.504,
+   1.495
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Ross 128",
+  "name": "Ross  128",
+  "group": "Red dwarfs",
+  "ra": 176.93499,
+  "dec": 0.80456,
+  "parallax_mas": 296.305,
+  "distance_pc": 3.375,
+  "pmra": 607.3,
+  "pmdec": -1223.03,
+  "xyz_pc": [
+   -3.37,
+   0.18,
+   0.047
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Teegarden's Star",
+  "name": "NAME Teegarden's Star",
+  "group": "Red dwarfs",
+  "ra": 43.25372,
+  "dec": 16.88129,
+  "parallax_mas": 260.988,
+  "distance_pc": 3.832,
+  "pmra": 3429.08,
+  "pmdec": -3805.54,
+  "xyz_pc": [
+   2.67,
+   2.512,
+   1.113
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Luyten's Star",
+  "name": "BD+05  1668",
+  "group": "Red dwarfs",
+  "ra": 111.85208,
+  "dec": 5.22579,
+  "parallax_mas": 264.127,
+  "distance_pc": 3.786,
+  "pmra": 571.23,
+  "pmdec": -3691.49,
+  "xyz_pc": [
+   -1.403,
+   3.499,
+   0.345
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Kapteyn's Star",
+  "name": "HD  33793",
+  "group": "Red dwarfs",
+  "ra": 77.91912,
+  "dec": -45.01843,
+  "parallax_mas": 254.199,
+  "distance_pc": 3.934,
+  "pmra": 6491.22,
+  "pmdec": -5708.61,
+  "xyz_pc": [
+   0.582,
+   2.719,
+   -2.783
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Groombridge 34",
+  "name": "HD   1326",
+  "group": "Red dwarfs",
+  "ra": 4.59535,
+  "dec": 44.02295,
+  "parallax_mas": 280.707,
+  "distance_pc": 3.562,
+  "pmra": 2891.52,
+  "pmdec": 411.83,
+  "xyz_pc": [
+   2.553,
+   0.205,
+   2.476
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Gliese 1061",
+  "name": "L  372-58",
+  "group": "Red dwarfs",
+  "ra": 53.99875,
+  "dec": -44.5127,
+  "parallax_mas": 272.161,
+  "distance_pc": 3.674,
+  "pmra": 745.65,
+  "pmdec": -373.32,
+  "xyz_pc": [
+   1.54,
+   2.12,
+   -2.576
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "YZ Ceti",
+  "name": "V* YZ Cet",
+  "group": "Red dwarfs",
+  "ra": 18.12765,
+  "dec": -16.99899,
+  "parallax_mas": 269.057,
+  "distance_pc": 3.717,
+  "pmra": 1205.07,
+  "pmdec": 637.55,
+  "xyz_pc": [
+   3.378,
+   1.106,
+   -1.087
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Lacaille 9352",
+  "name": "HD 217987",
+  "group": "Red dwarfs",
+  "ra": 346.46682,
+  "dec": -35.85307,
+  "parallax_mas": 304.135,
+  "distance_pc": 3.288,
+  "pmra": 6765.99,
+  "pmdec": 1330.29,
+  "xyz_pc": [
+   2.591,
+   -0.624,
+   -1.926
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Lacaille 8760",
+  "name": "V* AX Mic",
+  "group": "Red dwarfs",
+  "ra": 319.31362,
+  "dec": -38.86736,
+  "parallax_mas": 251.912,
+  "distance_pc": 3.97,
+  "pmra": -3258.97,
+  "pmdec": -1145.86,
+  "xyz_pc": [
+   2.344,
+   -2.015,
+   -2.491
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Ross 154",
+  "name": "CD-23 14742",
+  "group": "Red dwarfs",
+  "ra": 282.45568,
+  "dec": -23.83624,
+  "parallax_mas": 336.027,
+  "distance_pc": 2.976,
+  "pmra": 639.37,
+  "pmdec": -193.96,
+  "xyz_pc": [
+   0.587,
+   -2.658,
+   -1.203
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Ross 248",
+  "name": "Ross  248",
+  "group": "Red dwarfs",
+  "ra": 355.47932,
+  "dec": 44.17745,
+  "parallax_mas": 316.481,
+  "distance_pc": 3.16,
+  "pmra": 112.53,
+  "pmdec": -1591.65,
+  "xyz_pc": [
+   2.259,
+   -0.179,
+   2.202
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "EZ Aquarii",
+  "name": "V* EZ Aqr",
+  "group": "Red dwarfs",
+  "ra": 339.6399,
+  "dec": -15.29993,
+  "parallax_mas": 293.6,
+  "distance_pc": 3.406,
+  "pmra": 2314.8,
+  "pmdec": 2295.3,
+  "xyz_pc": [
+   3.08,
+   -1.143,
+   -0.899
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "UV Ceti",
+  "name": "G 272-61B",
+  "group": "Red dwarfs",
+  "ra": 24.75682,
+  "dec": -17.95028,
+  "parallax_mas": 373.844,
+  "distance_pc": 2.675,
+  "pmra": 3178.69,
+  "pmdec": 584.06,
+  "xyz_pc": [
+   2.311,
+   1.066,
+   -0.824
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Gliese 1",
+  "name": "HD 225213",
+  "group": "Red dwarfs",
+  "ra": 1.35179,
+  "dec": -37.35736,
+  "parallax_mas": 230.097,
+  "distance_pc": 4.346,
+  "pmra": 5633.44,
+  "pmdec": -2334.72,
+  "xyz_pc": [
+   3.454,
+   0.081,
+   -2.637
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "TRAPPIST-1",
+  "name": "TRAPPIST-1",
+  "group": "Red dwarfs",
+  "ra": 346.62237,
+  "dec": -5.0414,
+  "parallax_mas": 80.212,
+  "distance_pc": 12.467,
+  "pmra": 930.79,
+  "pmdec": -479.04,
+  "xyz_pc": [
+   12.082,
+   -2.873,
+   -1.096
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Gliese 876",
+  "name": "BD-15  6290",
+  "group": "Red dwarfs",
+  "ra": 343.31972,
+  "dec": -14.2637,
+  "parallax_mas": 214.038,
+  "distance_pc": 4.672,
+  "pmra": 957.72,
+  "pmdec": -673.6,
+  "xyz_pc": [
+   4.338,
+   -1.3,
+   -1.151
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "AD Leonis",
+  "name": "V* AD Leo",
+  "group": "Red dwarfs",
+  "ra": 154.90117,
+  "dec": 19.87,
+  "parallax_mas": 201.406,
+  "distance_pc": 4.965,
+  "pmra": -498.62,
+  "pmdec": -43.43,
+  "xyz_pc": [
+   -4.229,
+   1.981,
+   1.688
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Alpha Centauri A",
+  "name": "* alf Cen A",
+  "group": "Bright neighbours",
+  "ra": 219.90206,
+  "dec": -60.83399,
+  "parallax_mas": 742.12,
+  "distance_pc": 1.347,
+  "pmra": -3679.25,
+  "pmdec": 473.67,
+  "xyz_pc": [
+   -0.504,
+   -0.421,
+   -1.177
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Sirius",
+  "name": "* alf CMa",
+  "group": "Bright neighbours",
+  "ra": 101.28716,
+  "dec": -16.71612,
+  "parallax_mas": 379.21,
+  "distance_pc": 2.637,
+  "pmra": -546.01,
+  "pmdec": -1223.07,
+  "xyz_pc": [
+   -0.494,
+   2.477,
+   -0.758
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Procyon",
+  "name": "* alf CMi",
+  "group": "Bright neighbours",
+  "ra": 114.8255,
+  "dec": 5.22499,
+  "parallax_mas": 284.56,
+  "distance_pc": 3.514,
+  "pmra": -714.59,
+  "pmdec": -1036.8,
+  "xyz_pc": [
+   -1.469,
+   3.176,
+   0.32
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Epsilon Eridani",
+  "name": "* eps Eri",
+  "group": "Bright neighbours",
+  "ra": 53.23269,
+  "dec": -9.45826,
+  "parallax_mas": 310.577,
+  "distance_pc": 3.22,
+  "pmra": -974.76,
+  "pmdec": 20.88,
+  "xyz_pc": [
+   1.901,
+   2.544,
+   -0.529
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Tau Ceti",
+  "name": "* tau Cet",
+  "group": "Bright neighbours",
+  "ra": 26.01701,
+  "dec": -15.93748,
+  "parallax_mas": 273.81,
+  "distance_pc": 3.652,
+  "pmra": -1721.73,
+  "pmdec": 854.96,
+  "xyz_pc": [
+   3.156,
+   1.54,
+   -1.003
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "61 Cygni A",
+  "name": "*  61 Cyg A",
+  "group": "Bright neighbours",
+  "ra": 316.72475,
+  "dec": 38.74942,
+  "parallax_mas": 285.995,
+  "distance_pc": 3.497,
+  "pmra": 4164.21,
+  "pmdec": 3249.61,
+  "xyz_pc": [
+   1.985,
+   -1.869,
+   2.189
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Altair",
+  "name": "* alf Aql",
+  "group": "Bright neighbours",
+  "ra": 297.69583,
+  "dec": 8.86832,
+  "parallax_mas": 194.95,
+  "distance_pc": 5.13,
+  "pmra": 536.23,
+  "pmdec": 385.29,
+  "xyz_pc": [
+   2.356,
+   -4.488,
+   0.791
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Epsilon Indi",
+  "name": "* eps Ind",
+  "group": "Bright neighbours",
+  "ra": 330.84022,
+  "dec": -56.78598,
+  "parallax_mas": 274.843,
+  "distance_pc": 3.638,
+  "pmra": 3966.66,
+  "pmdec": -2536.19,
+  "xyz_pc": [
+   1.74,
+   -0.971,
+   -3.044
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Vega",
+  "name": "* alf Lyr",
+  "group": "Bright neighbours",
+  "ra": 279.23473,
+  "dec": 38.78369,
+  "parallax_mas": 130.23,
+  "distance_pc": 7.679,
+  "pmra": 200.94,
+  "pmdec": 286.23,
+  "xyz_pc": [
+   0.961,
+   -5.908,
+   4.81
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ },
+ {
+  "query": "Fomalhaut",
+  "name": "* alf PsA",
+  "group": "Bright neighbours",
+  "ra": 344.41269,
+  "dec": -29.62224,
+  "parallax_mas": 129.81,
+  "distance_pc": 7.704,
+  "pmra": 328.95,
+  "pmdec": -164.67,
+  "xyz_pc": [
+   6.45,
+   -1.799,
+   -3.808
+  ],
+  "source": "SIMBAD (simbad.cfa.harvard.edu)"
+ }
+]

@@ -46,7 +46,10 @@ function stretch(pixels: Uint8ClampedArray): { floor: number; span: number } {
   return { floor, span: Math.max(at(0.995) - floor, 24) };
 }
 
-async function compose(reference: PassInfo[], views: FramesResponse[], width: number, height: number) {
+async function compose(reference: PassInfo[], views: FramesResponse[]) {
+  const sample = reference.length ? await loadImage(reference[0].image) : null;
+  const width = sample?.naturalWidth || 1;
+  const height = sample?.naturalHeight || 1;
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
@@ -91,7 +94,7 @@ export function useColour(query: TargetQuery, reference: FramesResponse | null, 
     if (!enabled || !frames) return;
     const controller = new AbortController();
     Promise.all(COLOUR_CHANNELS.map(({ detector }) => fetchFrames({ ...current, detector }, controller.signal)))
-      .then((views) => compose(frames.passes, views, frames.grid.width_px, frames.grid.height_px))
+      .then((views) => compose(frames.passes, views))
       .then((images) => {
         if (!controller.signal.aborted) setState({ key, images, loading: false, error: null });
       })
